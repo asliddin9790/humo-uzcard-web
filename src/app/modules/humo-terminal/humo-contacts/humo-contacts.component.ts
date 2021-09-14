@@ -6,6 +6,7 @@ import {Table} from 'primeng/table';
 import {MenuItem, MessageService} from 'primeng/api';
 import {EditContract} from '../../../model/edit-contract';
 import Swal from 'sweetalert2';
+import {ReportsService} from "../reports.service";
 
 @Component({
   selector: 'app-humo-contacts',
@@ -26,7 +27,7 @@ export class HumoContactsComponent implements OnInit {
   showAddButton = true;
 
 
-  constructor(private humoTerminalService: HumoTerminalService, private messageService: MessageService) {
+  constructor(private humoTerminalService: HumoTerminalService, private messageService: MessageService, private reportService: ReportsService) {
   }
 
   ngOnInit(): void {
@@ -119,4 +120,7 @@ export class HumoContactsComponent implements OnInit {
   }
 
 
+  reportExcel(customer: any) {
+    this.reportService.reportExcel(customer);
+  }
 }

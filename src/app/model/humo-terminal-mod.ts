@@ -1,5 +1,5 @@
 export class HumoTerminalMod {
-  constructor(public merchantId: string,
+  constructor(public MERCHANT: string,
               public terminalId: string,
               public terminalType1: string,
               public terminalKind: string,
@@ -7,7 +7,7 @@ export class HumoTerminalMod {
               public pointCodeTerminal: string,
               public installationDate: string,
               public terminalStatus: string,
-              public terminalInventoryNumber: number,
+              public terminalInventoryNumber: string,
               public terminalSerialType: string,
               public terminalSerialNumber: string,
               public interfaceConnection: string,

@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HumoTerminal} from 'src/app/model/humo-terminal';
 import {NgForm} from '@angular/forms';
-import {EditMerchant} from '../../model/edit-merchant';
-import {ClientList} from "../../model/client-list";
+import {HumoTerminalMod} from '../../model/humo-terminal-mod';
 
 @Injectable({
   providedIn: 'root'
@@ -41,9 +40,9 @@ export class HumoTerminalService {
     {type: 'Get'}
   ];
 
-  humoTerminalMod = [
+  humoTerminalMod: HumoTerminalMod[] = [
     {
-      merchantId: '123',
+      MERCHANT: '123',
       terminalId: '001',
       terminalType1: 'POST',
       terminalKind: 'kind',
@@ -62,7 +61,7 @@ export class HumoTerminalService {
       accountTransitory: 'account transitory'
     },
     {
-      merchantId: '444',
+      MERCHANT: '444',
       terminalId: '002',
       terminalType1: 'GET',
       terminalKind: 'kind',
@@ -81,7 +80,7 @@ export class HumoTerminalService {
       accountTransitory: 'account transitory'
     },
     {
-      merchantId: '555',
+      MERCHANT: '555',
       terminalId: '003',
       terminalType1: 'POST',
       terminalKind: 'kind',
@@ -100,7 +99,7 @@ export class HumoTerminalService {
       accountTransitory: 'account transitory'
     },
     {
-      merchantId: '111',
+      MERCHANT: '111',
       terminalId: '004',
       terminalType1: 'POST',
       terminalKind: 'kind',
@@ -430,7 +429,7 @@ export class HumoTerminalService {
   }
 
   authTerminal(item: any): boolean {
-    return this.humoTerminalMod.some(m => m.merchantId === item);
+    return this.humoTerminalMod.some(m => m.MERCHANT === item);
   }
 
 
@@ -449,6 +448,13 @@ export class HumoTerminalService {
     const index: number = this.merchants.indexOf(customer);
     if (index !== -1) {
       this.merchants.splice(index, 1);
+    }
+  }
+
+  deleteTerminal(cus: any) {
+    const index: number = this.humoTerminalMod.indexOf(cus);
+    if (index !== -1) {
+      this.humoTerminalMod.splice(index, 1);
     }
   }
 
@@ -472,14 +478,8 @@ export class HumoTerminalService {
     console.log('Updated contract:  ', this.merchants[i]);
   }
 
-  /*    deleteMerchant(customer: any) {
-        const index: number = this.merchants.indexOf(customer);
-        if (index !== -1) {
-          this.merchants.splice(index, 1);
-        }
-      }*/
   updateHumoTerminal(updateHumoTerminal: NgForm) {
-    const index = this.humoTerminalMod.indexOf(updateHumoTerminal.value.merchantId);
+    const index = this.humoTerminalMod.indexOf(updateHumoTerminal.value.MERCHANT);
     if (index !== -1) {
       this.humoTerminalMod[index] = updateHumoTerminal.value;
     }

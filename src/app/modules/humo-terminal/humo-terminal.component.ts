@@ -1,10 +1,11 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {HumoTerminal} from 'src/app/model/humo-terminal';
 import {HumoTerminalService} from './humo-terminal.service';
-import {NgForm} from '@angular/forms';
+import {NgForm, NgModel} from '@angular/forms';
 import {Table} from 'primeng/table';
 import {HumoTerminalMod} from '../../model/humo-terminal-mod';
 import Swal from 'sweetalert2';
+import {ReportsService} from './reports.service';
 
 
 @Component({
@@ -31,26 +32,27 @@ export class HumoTerminalComponent implements OnInit {
   // @ts-ignore
   humoTerminal: HumoTerminal[];
 
-  humoTerminalMod: any[];
+  humoTerminalMod: HumoTerminalMod[];
   displayBasic2: boolean;
 
 
-  constructor(private humoTerminalService: HumoTerminalService) {
+  constructor(private humoTerminalService: HumoTerminalService, private reportService: ReportsService) {
   }
 
+  epos = true;
+  pos = true;
+  atm = true;
   someValueFromChild: any;
   searchBtn = true;
   loading = false;
   status: any[];
   displayBasicUpdateHumoTerminal = false;
-  updateTerminal: HumoTerminalMod;
+  updateTerminalMod: HumoTerminalMod;
 
 
   ngOnInit() {
     this.humoTerminal = this.humoTerminalService.merchants;
     this.humoTerminalMod = this.humoTerminalService.humoTerminalMod;
-    console.log('mod ter: ' + this.humoTerminalMod);
-    console.log(' ter: ' + this.humoTerminal);
     this.status = this.humoTerminalService.status;
 
   }
@@ -198,8 +200,10 @@ export class HumoTerminalComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.humoTerminalMod.push(form.value);
     this.displayBasic2 = false;
-    console.log(form.value);
+    this.displayBasicUpdateHumoTerminal = false;
+    form.reset();
   }
 
 
@@ -209,7 +213,8 @@ export class HumoTerminalComponent implements OnInit {
   }
 
   openUpdate(customer: any) {
-
+    this.displayBasicUpdateHumoTerminal = true;
+    this.updateTerminalMod = customer;
     console.log('Customer open.: ' + customer);
   }
 
@@ -223,7 +228,39 @@ export class HumoTerminalComponent implements OnInit {
   }
 
   onDeleteTerminal(customer: any) {
-    this.humoTerminalService.deleteContract(customer);
-    Swal.fire('Deleted!', 'Humo Terminal deleted, ' + customer.merchantId, 'success');
+    this.humoTerminalService.deleteTerminal(customer);
+    console.log(customer);
+    Swal.fire('Deleted!', 'Humo Terminal deleted, ' + customer.MERCHANT, 'success');
+  }
+
+  reportExcel(customer: any) {
+    console.log('terminal excel custom.: ', customer);
+    this.reportService.reportExcel(customer);
+  }
+
+
+
+
+  typeChange(terminalType1: any) {
+    console.log(terminalType1);
+    switch (terminalType1){
+      case 'pos': {
+        this.epos = true;
+        this.atm = true;
+        break;
+      }
+      case 'epos': {
+        this.epos = true;
+        this.atm = false;
+        break;
+      }
+      case 'atm': {
+        this.epos = false;
+        this.atm = true;
+        break;
+      }
+    }
+    console.log('this.epos.: ' + this.epos);
+    console.log('this.ATM.: ' + this.atm);
   }
 }

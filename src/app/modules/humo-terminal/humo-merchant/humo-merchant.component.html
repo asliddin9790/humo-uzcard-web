@@ -62,10 +62,6 @@
 </div>
 
 <div class="card table-width">
-  <!--  <div class="m-3 search-title">
-      <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog2()"
-                icon="pi pi-credit-card" label="+"></p-button>
-    </div>-->
 
   <p-table #dt1 [value]="humoMerchant"
            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
@@ -146,7 +142,7 @@
 </div>
 
 <!--Add merchant-->
-<p-dialog class="dialog" header="Adding new client(merchant)" [style]="{width: '70vw'}"
+<!--<p-dialog class="dialog" header="Adding new client(merchant)" [style]="{width: '70vw'}"
           [(visible)]="displayBasic2">
   <h2 class="h1-title">Adding new client(merchant)</h2>
   <form class="p-5" #form="ngForm" ngForm="form" (ngSubmit)="onSubmit(form)">
@@ -182,7 +178,7 @@
                ngModel required>
         <span *ngIf="!FULL_NAME.valid && FULL_NAME.touched" class="help-block text-danger input_span">Please enter a valid FULL_NAME!</span>
       </div>
-      <div class="col-md-3  label-block"><!--внешнее имя-->
+      <div class="col-md-3  label-block">&lt;!&ndash;внешнее имя&ndash;&gt;
         Legal address - country code - type:
       </div>
       <div class="col-md-3">
@@ -358,29 +354,18 @@
         <span *ngIf="!USER_FIELD.valid && USER_FIELD.touched"
               class="help-block text-danger input_span">Please enter a valid USER_FIELD!</span>
       </div>
-      <!--    <div class="col-md-2  label-block">&lt;!&ndash; основ. контакт. телефон&ndash;&gt;
-            basics. contact. telephone:
-          </div>
-          <div class="col-md-4">
-            <input type="text" name="phoneNumber" #phoneNumber="ngModel" class="form-control inputclass"
-                   ngModel required>
-            <span *ngIf="!phoneNumber.valid && phoneNumber.touched" class="help-block text-danger input_span">Please enter a valid phone number!</span>
-
-          </div>-->
     </div>
 
     <button type="submit" (click)="onCancel(form)" class="btn bg-btn mt-3">Cancel</button>
     <button type="submit" class="btn bg-btn mt-3 ml-3">Save</button>
   </form>
-</p-dialog>
+</p-dialog>-->
 
 <!--Update merchant-->
 <p-dialog class="dialog" header="Update  client(merchant)" [style]="{width: '70vw'}"
           [(visible)]="displayBasicUpdate">
   <h2 class="h1-title">Update  client(merchant)</h2>
   <form class="p-5" #updateMerchant="ngForm" ngForm="updateMerchant" (ngSubmit)="onSubmitUdateMerchant(updateMerchant)">
-
-
     <div class="row">
       <div class="col-md-3 label-block">
         Abbreviated company name:
@@ -389,7 +374,6 @@
         <input type="text" name="ABRV_NAME" #ABRV_NAME="ngModel" class="form-control inputclass" ngModel="{{updateMerchent?.ABRV_NAME}}"
                required>
         <span *ngIf="!ABRV_NAME.valid && ABRV_NAME.touched" class="help-block text-danger input_span">Please enter a valid ABRV_NAME Id!</span>
-
       </div>
       <div class="col-md-3 label-block">
         Fax machine number - type:
@@ -587,18 +571,9 @@
         <span *ngIf="!USER_FIELD.valid && USER_FIELD.touched"
               class="help-block text-danger input_span">Please enter a valid USER_FIELD!</span>
       </div>
-      <!--    <div class="col-md-2  label-block">&lt;!&ndash; основ. контакт. телефон&ndash;&gt;
-            basics. contact. telephone:
-          </div>
-          <div class="col-md-4">
-            <input type="text" name="phoneNumber" #phoneNumber="ngModel" class="form-control inputclass"
-                   ngModel required>
-            <span *ngIf="!phoneNumber.valid && phoneNumber.touched" class="help-block text-danger input_span">Please enter a valid phone number!</span>
-
-          </div>-->
     </div>
 
-    <button type="submit" (click)="onCancel(form)" class="btn bg-btn mt-3">Cancel</button>
+    <button type="button" (click)="onCancel()" class="btn bg-btn mt-3">Cancel</button>
     <button type="submit"  class="btn bg-btn mt-3 ml-3">Save</button>
   </form>
 </p-dialog>

@@ -47,13 +47,12 @@
       </div>
     </form>
   </fieldset>
-
 </div>
 
 <div class="card table-width">
   <div class="m-3 search-title" *ngIf="showAddButton">
     <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog2()"
-              icon="pi pi-credit-card" label="+"></p-button>
+              icon="pi pi-plus" label=" Contract"></p-button>
   </div>
 
   <p-table #dt1 [value]="humoMerchant"
@@ -123,6 +122,7 @@
         <td class="td-width">
           <button type="button" pButton pRipple icon="pi pi-user-edit"(click)="onEdited(customer)"  class="p-button-info p-mr-2 ch-btn">Update </button>
           <button type="button" pButton pRipple (click)="onDeletedContract(customer)" class="btn btn-danger ml-2 ch-btn"  icon="pi pi-user-minus">Delete </button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(customer)"  class="p-button-success p-mr-2 ch-btn">Report </button>
         </td>
       </tr>
     </ng-template>

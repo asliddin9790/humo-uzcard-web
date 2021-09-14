@@ -7,7 +7,7 @@
 </div>
 
 <!--Search form-->
-<div class="main_table ">
+<div class="main_table">
   <p class="search-title" (click)="onSearchBtn()"><i class="fa fa-angle-up"></i> Search</p>
   <hr>
   <fieldset class="border p-5 shadow" *ngIf="searchBtn">
@@ -64,14 +64,14 @@
 <div class="card table-width">
   <div class="m-3 search-title">
     <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog2()"
-              icon="pi pi-credit-card" label="+"></p-button>
+              icon="pi pi-credit-card pi-plus" label="Terminal"></p-button>
   </div>
 
   <p-table #dt1 [value]="humoTerminalMod"
            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
            styleClass="p-datatable-gridlines"
            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-           [globalFilterFields]="['terminalId','merchantId','terminalStatus','terminalSerialNumber']">
+           [globalFilterFields]="['terminalId','MERCHANT','terminalStatus','terminalSerialNumber']">
 
     <ng-template pTemplate="caption">
       <div class="p-d-flex">
@@ -95,7 +95,7 @@
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
             Merchant id
-            <p-columnFilter type="text" field="merchantId" display="menu"></p-columnFilter>
+            <p-columnFilter type="text" field="MERCHANT" display="menu"></p-columnFilter>
           </div>
         </th>
         <th>
@@ -123,17 +123,18 @@
           {{customer.terminalId}}
         </td>
         <td class="td-width">
-          {{customer.merchantId}}
+          {{customer.MERCHANT}}
         </td>
         <td class="td-width">
           {{customer.terminalStatus}}
         </td>
         <td class="td-width">
-          {{customer.terminalSerialNumber }}
+          {{customer.terminalSerialNumber}}
         </td>
         <td>
           <button type="button" pButton pRipple icon="pi pi-user-edit" (click)="openUpdate(customer)"  class="p-button-info p-mr-2 ch-btn">Update </button>
           <button type="button" pButton pRipple  (click)="onDeleteTerminal(customer)" class="btn btn-danger ml-2 ch-btn"  icon="pi pi-user-minus">Delete </button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(customer)"  class="p-button-success p-mr-2 ch-btn">Report </button>
         </td>
       </tr>
     </ng-template>
@@ -143,22 +144,6 @@
       </tr>
     </ng-template>
   </p-table>
-
-  <!--  <table class="table table-bordered  border p-5" >
-      <tr class="thead text-white">
-        <th>file sent</th>
-        <th>dispatch date</th>
-        <th>Received file</th>
-        <th>date of receipt</th>
-      </tr>
-      <tr>
-        <td>00205045</td>
-        <td>07.01.2021</td>
-        <td>OAR_905487_123454534</td>
-        <td>07.07.2021</td>
-      </tr>
-    </table>-->
-  <!--  <button class="btn btn-outline-secondary cancel-btn" (click)="cancel()">cancel</button>-->
 </div>
 
 
@@ -170,22 +155,27 @@
 
 
     <div class="row">
-      <div class="col-md-3 label-block">
+      <div class="col-md-3 label-block" *ngIf="epos">
         Merchant id :
       </div>
-      <div class="col-md-3">
-        <input type="text" name="merchantId" #merchantId="ngModel" class="form-control inputclass"
+      <div class="col-md-3" *ngIf="epos">
+        <input type="text" name="MERCHANT" #MERCHANT="ngModel" class="form-control inputclass"
                ngModel required>
-        <span *ngIf="!merchantId.valid && merchantId.touched" class="help-block text-danger input_span">Please enter a valid merchantId Id!</span>
+        <span *ngIf="!MERCHANT.valid && MERCHANT.touched" class="help-block text-danger input_span">Please enter a valid MERCHANT Id!</span>
 
       </div>
       <div class="col-md-3 label-block">
-        Terminal type :
+        Terminal type :name="terminalType1"
       </div>
       <div class="col-md-3">
-        <input type="text" name="terminalType" class="form-control inputclass"
-               ngModel required #terminalType="ngModel">
-        <span *ngIf="!terminalType.valid && terminalType.touched" class="help-block text-danger input_span">Please enter a valid terminalType type !</span>
+        <select required name="terminalType1" (change)="typeChange(form.value.terminalType1)"
+                ngModel #terminalType1="ngModel"  class="form-control search-input inputclass">
+        <option value="epos">EPOS Terminal</option>
+        <option value="imprinters">Imprinters</option>
+        <option value="pos">POS Terminal</option>
+        <option value="atm">ATM Terminal</option>
+      </select>
+        <span *ngIf="!terminalType1.valid && terminalType1.touched" class="help-block text-danger input_span">Please enter a valid terminalType 1 !</span>
       </div>
     </div>
 
@@ -231,11 +221,11 @@
 
     <div class="row mt-3">
 
-      <div class="col-md-3  label-block">
+      <div class="col-md-3  label-block" *ngIf="epos && atm">
         Terminal Status:
       </div>
       <div class="col-md-3">
-        <input type="text" name="terminalStatus" #terminalStatus="ngModel" class="form-control inputclass"
+        <input  *ngIf="epos && atm" type="text" name="terminalStatus" #terminalStatus="ngModel" class="form-control inputclass"
                ngModel required>
         <span *ngIf="!terminalStatus.valid && terminalStatus.touched" class="help-block text-danger input_span">Please enter a valid terminalStatus!</span>
       </div>
@@ -253,7 +243,7 @@
     </div>
 
 
-    <div class="row mt-3">
+    <div class="row mt-3"  *ngIf="epos && atm">
       <div class="col-md-3 label-block">
         Serial number of terminal:
       </div>
@@ -275,7 +265,7 @@
       </div>
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3"  *ngIf="epos && atm">
       <div class="col-md-3 label-block">
         Interface for connection :
       </div>
@@ -294,7 +284,7 @@
         <span *ngIf="!connectionHost.valid && connectionHost.touched" class="help-block text-danger input_span">Please enter a valid connectionHost!</span>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-3"  *ngIf="epos && atm">
       <div class="col-md-3 label-block">
         Account TMC server :
       </div>
@@ -312,12 +302,12 @@
         <span *ngIf="!configTMC.valid && configTMC.touched" class="help-block text-danger input_span">Please enter a valid P_POST_IND!</span>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-3"  *ngIf="epos && atm">
       <div class="col-md-3 label-block">
         Terminal type :
       </div>
       <div class="col-md-3">
-        <input type="date" name="terminalType2" #terminalType2="ngModel" class="form-control inputclass"
+        <input type="text" name="terminalType2" #terminalType2="ngModel" class="form-control inputclass"
                ngModel required>
         <span *ngIf="!terminalType2.valid && terminalType2.touched" class="help-block text-danger input_span">Please enter a valid terminalType2!</span>
       </div>
@@ -338,6 +328,178 @@
 
 
 <!--Update humo terminal-->
+<p-dialog class="dialog" header="Udate client(terminal)" [style]="{width: '70vw'}"
+          [(visible)]="displayBasicUpdateHumoTerminal">
+  <h2 class="h1-title">Udate client(terminal)</h2>
+  <form class="p-5" #formUpdate="ngForm" ngForm="form" (ngSubmit)="onSubmit(formUpdate)">
+
+
+    <div class="row">
+      <div class="col-md-3 label-block">
+        Merchant id :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="MERCHANT" #MERCHANT="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.MERCHANT}}" required>
+        <span *ngIf="!MERCHANT.valid && MERCHANT.touched" class="help-block text-danger input_span">Please enter a valid MERCHANT Id!</span>
+
+      </div>
+      <div class="col-md-3 label-block">
+        Terminal type :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalType1" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.terminalType1}}" required #terminalType1="ngModel">
+        <span *ngIf="!terminalType1.valid && terminalType1.touched" class="help-block text-danger input_span">Please enter a valid terminalType type 1 !</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Purpose of terminal :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalKind" #terminalKind="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.terminalKind}}" required>
+        <span *ngIf="!terminalKind.valid && terminalKind.touched" class="help-block text-danger input_span">Please enter a valid terminalKind!</span>
+      </div>
+      <div class="col-md-3  label-block"><!--внешнее имя-->
+        References:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="guide" #guide="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.guide}}" required>
+        <span *ngIf="!guide.valid && guide.touched"
+              class="help-block text-danger input_span">Please enter a valid guide!</span>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Point code of terminal :
+      </div>
+      <div class="col-md-3">
+        <input name="pointCodeTerminal" ngModel="{{updateTerminalMod?.pointCodeTerminal}}" #pointCodeTerminal="ngModel" class="form-control inputclass">
+        <span *ngIf="!pointCodeTerminal.valid && pointCodeTerminal.touched"
+              class="help-block text-danger input_span">Please enter a valid pointCodeTerminal !</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Current date:
+      </div>
+      <div class="col-md-3">
+        <input type="date" name="installationDate" ngModel="{{updateTerminalMod?.installationDate}}" #installationDate="ngModel" class="form-control inputclass">
+        <span *ngIf="!installationDate.valid && installationDate.touched" class="help-block text-danger input_span">Please enter a valid installationDate!</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+
+      <div class="col-md-3  label-block">
+        Terminal Status:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalStatus" #terminalStatus="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.terminalStatus}}" required>
+        <span *ngIf="!terminalStatus.valid && terminalStatus.touched" class="help-block text-danger input_span">Please enter a valid terminalStatus!</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Inventory number of the terminal:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalInventoryNumber" #terminalInventoryNumber="ngModel"
+               class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.terminalInventoryNumber}}" required>
+        <span *ngIf="!terminalInventoryNumber.valid && terminalInventoryNumber.touched"
+              class="help-block text-danger input_span">Please enter a valid terminalInventoryNumber!</span>
+      </div>
+
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Serial number of terminal:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalSerialType" #terminalSerialType="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.terminalSerialType}}" required>
+        <span *ngIf="!terminalSerialType.valid && terminalSerialType.touched"
+              class="help-block text-danger input_span">Please enter a valid terminalSerialType!</span>
+      </div>
+
+      <div class="col-md-3 label-block">
+        Terminal Model :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalSerialNumber" #terminalSerialNumber="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.terminalSerialNumber}}" required>
+        <span *ngIf="!terminalSerialNumber.valid && terminalSerialNumber.touched"
+              class="help-block text-danger input_span">Please enter a valid terminalSerialNumber!</span>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Interface for connection :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="interfaceConnection" #interfaceConnection="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.interfaceConnection}}" required>
+        <span *ngIf="!interfaceConnection.valid && interfaceConnection.touched"
+              class="help-block text-danger input_span">Please enter a valid interfaceConnection!</span>
+      </div>
+      <div class="col-md-3 label-block ">
+        Connection method with host :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="connectionHost" #connectionHost="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.connectionHost}}" required>
+        <span *ngIf="!connectionHost.valid && connectionHost.touched" class="help-block text-danger input_span">Please enter a valid connectionHost!</span>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Account TMC server :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="accountTMC" #accountTMC="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.accountTMC}}" required>
+        <span *ngIf="!accountTMC.valid && accountTMC.touched" class="help-block text-danger input_span">Please enter a valid accountTMC!</span>
+      </div>
+      <div class="col-md-3  label-block">
+        Configurable method of connecting to TMC host in the future:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="configTMC" #configTMC="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.configTMC}}" required>
+        <span *ngIf="!configTMC.valid && configTMC.touched" class="help-block text-danger input_span">Please enter a valid P_POST_IND!</span>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Terminal type :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalType2" #terminalType2="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.terminalType2}}" required>
+        <span *ngIf="!terminalType2.valid && terminalType2.touched" class="help-block text-danger input_span">Please enter a valid terminalType2!</span>
+      </div>
+
+      <div class="col-md-3 label-block">
+        Transitory account – Get from core banking:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="accountTransitory" #accountTransitory="ngModel" class="form-control inputclass"
+               ngModel="{{updateTerminalMod?.accountTransitory}}" required>
+        <span *ngIf="!accountTransitory.valid && accountTransitory.touched" class="help-block text-danger input_span">Please enter a valid accountTransitory!</span>
+      </div>
+    </div>
+    <button type="button" (click)="onCancel(form)" class="btn bg-btn mt-3">Cancel</button>
+    <button type="submit" class="btn bg-btn mt-3 ml-3">Save</button>
+  </form>
+</p-dialog>
 
 <!--Humo0terminal old version :)-->
 <!--<div class="container-fluid " style="background: #f1f1f1;overflow-x:hidden">

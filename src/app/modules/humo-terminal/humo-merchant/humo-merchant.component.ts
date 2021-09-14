@@ -63,9 +63,8 @@ export class HumoMerchantComponent implements OnInit {
     this.displayBasic2 = false;
   }
 
-  onCancel(form: NgForm) {
-    this.displayBasic2 = false;
-    form.reset();
+  onCancel() {
+    this.displayBasicUpdate = false;
   }
 
   openUpdate(customer: any) {
@@ -89,6 +88,8 @@ export class HumoMerchantComponent implements OnInit {
     this.displayBasicUpdate = false;
   }
 
-
+  onEditCancel() {
+    this.displayBasic2 = false;
+  }
 }
 

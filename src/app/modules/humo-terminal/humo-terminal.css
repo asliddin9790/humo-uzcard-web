@@ -10,6 +10,7 @@
   justify-content: center;
   height: 30px;
 }
+
 .span {
   font-size: 13px;
   /*  background-color: #6D90A3;*/
@@ -20,14 +21,17 @@
   /*  color: white;*/
   height: 30px;
 }
+
 .table-width{
   margin: 30px;
 }
+
 .cancel-btn{
   width: 80px;
   margin: 10px;
   float: left;
 }
+
 .thead {
   background-color: #84A1BA;
 }
@@ -70,16 +74,6 @@ fieldset{
   background-color: white;
 }
 
-
-
-
-
-
-
-
-
-
-
 /*old css code */
 .first-table {
   margin-bottom: 10px;
@@ -90,6 +84,7 @@ fieldset{
   /*height: 400px;*/
   font-size: smaller;
 }
+
 .table-head {
   background-color: #6D8FA2;
   color: aliceblue;
@@ -101,13 +96,16 @@ fieldset{
   float: top;height: 8px!important;
   padding: 10px;
 }
+
 .table-icon-button{
   background-color: #6D8FA2;
 }
+
 .tr-hover:hover{
   background-color: #ABDFFD;
   cursor: pointer;
 }
+
 .new-loan-button{
   position: relative;
   color: #84A1BA;
@@ -115,19 +113,23 @@ fieldset{
   left: 76px;
   top: 28px;
 }
+
 .pagination-bar{
   text-align: center;
   font-size: 16px;
   padding-top: 20px;
 }
+
 table {
   width: 100%;
 }
+
 table button{
   height: 26px;
   width:36px;
   padding: 4px;
 }
+
 .th-item{
   height:36px!important;
   padding-top:4px;
@@ -139,6 +141,7 @@ table button{
 table tbody td{
   padding: 4px;
 }
+
 .name_of_client{
   width: 200px;
   background-color: #84A1BA;
@@ -146,30 +149,37 @@ table tbody td{
   text-align: center;
   cursor: pointer;
 }
+
 .first-table thead .th-item ,.th-item_name_of_client{
   cursor: pointer;
 }
+
 .operation{
   width: 26px;
   background-color: #84A1BA;
   color: #fff;
   font-size: 16px;
 }
+
 .first-table thead .fa-sort{
   font-size: 18px;
   margin-left: 4px;
   cursor: pointer;
 }
+
 .marchand_id{
   width: 10px!important;
   margin-top: 2px;
 }
+
 .marchand_id  .btn-group .dropdown-toggle{
   color: #FFFFFF;
 }
+
 .name_of_client .btn-group .table-icon-button{
   color: #FFFFFF;
 }
+
 .search-section{
   width: 150px;
   height: 230px;
@@ -192,17 +202,19 @@ table tbody td{
   height: 35px;
   background-color: #84A1BA;
 }
+
 table header{
   height: 40px;
 }
+
 .dropdown .dropdown-menu .dropdown-toggle li{
   list-style: none;
-
-
 }
+
 .dropdown .dropdown-menu .dropdown-toggle li a{
   text-decoration: none;
 }
+
 .dropdown-menu{
   width: 100px!important;
 }
@@ -216,32 +228,44 @@ table header{
   margin-left: .255em;
   vertical-align: .255em;
 }
+
 .marchand{
   margin-top: 4px;
 }
+
 tbody tr td{
   font-size: 12px;
 }
+
 .fa-info{
   font-size: 14px;
 }
+
 .tr-hover td{
   margin:45px;
   font-size: 14px;
 }
+
 .p-table{
   margin-top: 25px!important;
 }
+
 .ch-btn {
   horiz-align: center;
   margin-left: 5px;
   height: 32px;
-  width: 105px;
+  width: 70px;
+}
+
+.btn-report{
+  height: 32px;
+  margin-left: 5px;
 }
 
 tr:hover{
   background-color: #B4C6E7;
 }
+
 tr td {
   padding: 5px;
 }

@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import {Table} from 'primeng/table';
 import {ClientList} from '../../../model/client-list';
 import {HumoTerminalService} from '../humo-terminal.service';
+import {ReportsService} from '../reports.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ClientListComponent implements OnInit {
   displayAddClient = false;
   customer: ClientList;
 
-  constructor(private service: HumoTerminalService) {
+  constructor(private service: HumoTerminalService, private reportService: ReportsService) {
   }
 
   ngOnInit(): void {
@@ -71,35 +72,29 @@ export class ClientListComponent implements OnInit {
   }
 
   reportExcel(customer: ClientList) {
-    this.reportClient.push(customer);
-    import('xlsx').then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.reportClient); // Sale Data
-      const workbook = {Sheets: {data: worksheet}, SheetNames: ['data']};
-      const excelBuffer: any = xlsx.write(workbook, {bookType: 'xlsx', type: 'array'});
-      this.saveAsExcelFile(excelBuffer, 'report');
-    });
+    this.reportService.reportExcel(customer);
   }
 
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    import('file-saver').then(FileSaver => {
-      const EXCEL_TYPE =
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-      const EXCEL_EXTENSION = '.xlsx';
-      const data: Blob = new Blob([buffer], {
-        type: EXCEL_TYPE
-      });
-      FileSaver.saveAs(
-        data,
-        fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
-      );
-    });
-    this.reportClearList(this.reportClient[0]);
-  }
+/*   saveAsExcelFile(buffer: any, fileName: string): void {
+     import('file-saver').then(FileSaver => {
+       const EXCEL_TYPE =
+         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+       const EXCEL_EXTENSION = '.xlsx';
+       const data: Blob = new Blob([buffer], {
+         type: EXCEL_TYPE
+       });
+       FileSaver.saveAs(
+         data,
+         fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+       );
+     });
+     this.reportClearList(this.reportClient[0]);
+   }
 
-  reportClearList(customer: ClientList) {
-    const index: number = this.reportClient.indexOf(customer);
-    if (index !== -1) {
-      this.reportClient.splice(index, 1);
-    }
-  }
+   reportClearList(customer: ClientList) {
+     const index: number = this.reportClient.indexOf(customer);
+     if (index !== -1) {
+       this.reportClient.splice(index, 1);
+     }
+   }*/
 }
