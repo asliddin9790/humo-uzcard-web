@@ -1,0 +1,116 @@
+<div class="component-loader col-md-12  m-2">
+  <div class="contract-header">
+    <h5>{{create}} {{edit}} | HUMO Contracts</h5>
+  </div>
+  <div>
+    <form (ngSubmit)="onSubmit()" #fContract="ngForm">
+      <div class="row">
+        <div class="col-md-2">
+          <label for="merchantId">Merchant ID:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="merchantId" [ngModel]="merchantId" name="merchantId" class="form-control inputclass"
+                 ngModel required>
+        </div>
+        <div class="col-md-2">
+          <label for="number-of-contract">Number of Contract:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="number-of-contract" [ngModel]="numberOfContract" name="number-of-contract"
+                 class="form-control inputclass" ngModel required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <label for="contract-date">Contract Conclusion Date:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="date" class="datepicker form-control inputclass" data-date-format="dd.mm.yyyy" id="contract-date"
+                 [ngModel]="dateOfContract" name="contract-date" ngModel required></div>
+        <div class="col-md-2">
+          <label for="account">Account:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="account" [ngModel]="account" name="account" class="form-control inputclass" ngModel
+                 required></div>
+      </div>
+      <div class=" contract-text"><p>Domestic | HUMO</p></div>
+      <div class="row">
+        <div class="col-md-8"><label for="humo-commission">Commission from the companies for transactions made at POS
+          terminals (the interest rate):</label></div>
+        <div class="col-md-4"><input type="number" id="humo-commission" [ngModel]="humoCommisson" name="humo-commission"
+                                     class="form-control inputclass-right" ngModel required></div>
+      </div>
+      <div class="row">
+        <div class="col-md-8"><label for="humo-fees">Minimum fee for transactons made from POS Terminals in minimum
+          currency units:</label></div>
+        <div class="col-md-4"><input type="number" id="humo-fees" [ngModel]="humoFees" name="humo-fees"
+                                     class="form-control inputclass-right" ngModel required></div>
+      </div>
+      <div class="contract-text"><p>International | VISA</p></div>
+      <div class="row">
+        <div class="col-md-8"><label for="international-visa-commission">Commission from the companies for transactions
+          made at POS terminals (the interest rate):</label></div>
+        <div class="col-md-4"><input type="number" id="international-visa-commission"
+                                     [ngModel]="internationalVisaCommission" name="international-visa-commission"
+                                     class="form-control inputclass-right" ngModel required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8"><label for="international-visa-fees">Minimum fee for transactons made from POS Terminals
+          in minimum currency units:</label></div>
+        <div class="col-md-4"><input type="number" id="international-visa-fees" [ngModel]="internationalVisaFees"
+                                     name="international-visa-fees" class="form-control inputclass-right" ngModel
+                                     required>
+        </div>
+      </div>
+
+      <div class="contract-text"><p>International | Mastercard</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8"><label for="master-commission">Commission from the companies for transactions made at POS
+          terminals (the interest rate):</label></div>
+        <div class="col-md-4"><input type="number" id="master-commission" [ngModel]="masterCommission"
+                                     name="master-commission" class="form-control inputclass-right" ngModel required>
+        </div>
+      </div>
+
+      <div class="contract-text">
+        <p>Domestic | VISA</p></div>
+      <div class="row">
+        <div class="col-md-8"><label for="master-fees">Minimum fee for transactons made from POS Terminals in minimum
+          currency units:</label></div>
+        <div class="col-md-4">
+          <input type="number" id="master-fees" [ngModel]="masterFees" name="master-fees"
+                 class="form-control inputclass-right" ngModel required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8"><label for="local-visa-commission">Commission from the companies for transactions made at
+          POS terminals (the interest rate):</label></div>
+        <div class="col-md-4">
+          <input type="number" id="local-visa-commission" [ngModel]="localVisaCommission" name="local-visa-commission"
+                 class="form-control inputclass-right" ngModel required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8"><label for="local-visa-fees">Commission from the companies for transactions made at POS
+          terminals (the interest rate):</label></div>
+        <div class="col-md-4">
+          <input type="number" id="local-visa-fees" [ngModel]="localVisaFees" name="local-visa-fees"
+                 class="form-control inputclass-right" ngModel required>
+        </div>
+      </div>
+      <div class="row">
+        <div class=" button_class mb-5" style="margin-bottom: 100px!important;">
+          <button type="submit" class="btn btn-primary ml-5" label="Save" [disabled]="!fContract.valid"> {{create}} {{edit}}</button>
+          <button type="button" label="Cancel" class="btn btn-danger ml-5" (click)="cancelContractForm()" >Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

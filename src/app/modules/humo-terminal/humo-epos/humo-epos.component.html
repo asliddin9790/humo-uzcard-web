@@ -1,0 +1,97 @@
+<div class="component-loader col-md-12  m-2">
+  <div class="e-post-header">
+    <h5>{{create}}{{edit}} | E-POS Terminal</h5>
+  </div>
+  <hr>
+  <div>
+    <form (ngSubmit)="onSubmit()" #fEPOS="ngForm">
+
+      <div class="row mt-5 pl-2">
+        <div class="col-md-2">
+          <label for="merchantId">Merchant ID:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="merchantId" [ngModel]="merchantId" name="merchantId" class="form-control inputclass"
+                 ngModel required>
+        </div>
+
+        <div class="col-md-2">
+          <label for="terminal-type">Terminal Type:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-type" class="form-control inputclass" [ngModel]="terminalType" name="terminal-type"
+                  ngModel required>
+            <option *ngFor="let ts of humoEposParameters.terminalTypes">
+              {{ts}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-5 pl-2">
+        <div class="col-md-2">
+          <label for="terminal-kind">Terminal kind:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-kind" class="form-control inputclass" [ngModel]="terminalKind" name="terminal-kind"
+                  ngModel required>
+            <option *ngFor="let tk of humoEposParameters.terminalKinds">
+              {{tk}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="point-code-terminal">Point code of the terminal:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="point-code-terminal" class="form-control inputclass" placeholder="M10101M13146"
+                 [ngModel]="pointCodeTerminal" name="point-code-terminal" ngModel required>
+        </div>
+      </div>
+      <div class="row mt-5 pl-2">
+        <div class="col-md-2">
+          <label for="terminal-installation-date">Installation Date:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="date" class="datepicker form-control inputclass" data-date-format="dd.mm.yyyy"
+                 id="terminal-installation-date" [ngModel]="installationDate" name="terminal-installation-date" ngModel
+                 required>
+        </div>
+
+        <div class="col-md-2">
+          <label for="terminal-status">Terminal Status:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-status" class="form-control inputclass" [ngModel]="terminalStatus" name="terminal-status"
+                  ngModel required>
+            <option *ngFor="let ts of humoEposParameters.terminalStatuses">
+              {{ts}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-5 pl-2 ">
+        <div class="col-md-2">
+          <label for="number-of-terminal">Number of terminals:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="number-of-terminal" class="form-control inputclass" placeholder="1"
+                 [ngModel]="numberOfTerminal" name="number-of-terminal" ngModel required></div>
+
+        <div class="col-md-2">
+          <label for="account">Account:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="account" class="form-control inputclass" placeholder="23508000200950907200"
+                 [ngModel]="account" name="account" ngModel required>
+        </div>
+      </div>
+      <div class="row">
+        <div class=" button_class">
+          <button type="submit" class="btn btn-primary ml-5" label="Save" [disabled]="!fEPOS.valid">{{create}}{{edit}}</button>
+          <button type="button" label="Cancel" class="btn btn-danger ml-5" (click)="cancelEPosForm()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

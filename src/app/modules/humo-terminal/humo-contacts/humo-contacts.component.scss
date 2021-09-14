@@ -1,0 +1,84 @@
+.main_table {
+  margin: 30px;
+}
+.search-title {
+  font-size: 20px;
+  color: #6D90A3;
+  cursor: pointer;
+}
+.search-input {
+  justify-content: center;
+  height: 30px;
+}
+.span {
+  font-size: 13px;
+  /*  background-color: #6D90A3;*/
+  border-bottom-left-radius: 5.46px;
+  border-top-left-radius: 5.46px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  /*  color: white;*/
+  height: 30px;
+}
+.table-width{
+  margin: 5px;
+}
+.cancel-btn{
+  width: 80px;
+  margin: 10px;
+  float: left;
+}
+.thead {
+  background-color: #84A1BA;
+}
+.h1-title {
+  color: #A00B05;
+}
+.legent {
+  width: fit-content;
+}
+.inputclass {
+  height: 23px;
+  background: #FFFFFF;
+  border: 1px solid #84A1BA;
+  box-sizing: border-box;
+  border-radius: 5.46px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 10px;
+  padding: 0;
+  margin: 0;
+}
+.input_span {
+  font-size: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.label-block {
+  text-align: right;
+}
+.bg-btn {
+  background-color: #6D90A3;
+  color: white;
+}
+
+fieldset{
+  background-color: white;
+}
+.split-button{
+  height: 10px;
+}
+
+tr:hover{
+  background-color: #B4C6E7;
+}
+tr td {
+  padding: 5px;
+}
+.ch-btn {
+  horiz-align: center;
+  margin-left: 5px;
+  height: 32px;
+  width: 105px;
+}

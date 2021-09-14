@@ -1,0 +1,519 @@
+<app-subheader-wrapper>
+
+
+  <ng-container actions>
+  </ng-container>
+</app-subheader-wrapper>
+
+<div class="main_table ">
+
+
+  <!-- <p-fieldset legend="Search" [toggleable]="true">-->
+  <p class="search-title" (click)="onSearchBtn()"><i class="fa fa-angle-up"></i>  Search</p>
+  <hr>
+  <fieldset class="border p-5 shadow" *ngIf="searchBtn">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" ngForm="searchForm">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Client id</span>
+            <input required name="code" ngModel type="text" class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group mb-3"><!--Наименование клиент-->
+            <span class="input-group-text span">Customer name</span>
+            <input type="text" class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Code category</span>
+            <input type="text" class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">App id</span>
+            <input type="text" class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">State</span>
+            <input type="text" class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button type="submit" class="btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search</button>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+  <!--  </p-fieldset>-->
+<!--  <fieldset class="border p-2 mt-3 shadow">
+   &lt;!&ndash; <div class="m-3 search-title">
+      BTRT 51
+      <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3', height:'1.5vw'}" (click)="showBasicDialog2()"
+                icon="pi pi-credit-card" label="+"></p-button>
+    </div>
+&ndash;&gt;
+    &lt;!&ndash;table &ndash;&gt;
+   &lt;!&ndash; <table class="table table-hover ">
+      <thead>
+      <tr class="thead text-white border table_body">
+        <th>Client code</th>
+        <th>Наименование</th>
+        <th>Category code</th>
+        <th>Category name</th>
+        <th>State</th>
+        <th>Applications</th>
+        <th>App id</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let uzcard of uzcardTerminal | paginate: {itemsPerPage:5, currentPage: page}" class="table_body">
+        <td>{{uzcard.clientId}}</td>
+        <td>{{uzcard.nameV}}</td>
+        <td>{{uzcard.codeCategory}}</td>
+        <td>{{uzcard.codeValuta}}</td>
+        <td>{{uzcard.patronymic}}</td>
+        <td>{{uzcard.addresType}}</td>
+        <td>{{uzcard.domU}}</td>
+      </tr>
+      </tbody>
+    </table>&ndash;&gt;
+ &lt;!&ndash;   <pagination-controls responsive="true"
+                                  previousLabel="Prev"
+                                  nextLabel="Next"
+                                  (pageChange)="page = $event" class="pagination page-control">
+
+  </pagination-controls>&ndash;&gt;
+  </fieldset>-->
+
+</div>
+
+
+
+<div class="card table-width" >
+  <div class="m-3 search-title">
+    BTRT 51
+    <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog2()"
+              icon="pi pi-credit-card" label="+"></p-button>
+  </div>
+
+  <p-table #dt1 [value]="uzcardTerminal"
+           [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading" styleClass="p-datatable-gridlines"
+           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [globalFilterFields]="['clientId','nameV','codeCategory','codeValuta','patronymic','addresType','domU']">
+
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+			<span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"/>
+            </span>
+        </div>
+      </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+           Client code
+            <p-columnFilter type="text" field="clientId" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Наименование
+            <p-columnFilter type="text" field="nameV" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Category code
+            <p-columnFilter type="text" field="country.name" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Category name
+            <p-columnFilter type="text" field="codeCategory" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            State
+            <p-columnFilter type="text" field="codeValuta" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Applications
+            <p-columnFilter type="text" field="patronymic" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            App id
+            <p-columnFilter type="text" field="addresType" display="menu"></p-columnFilter>
+          </div>
+        </th>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td class="td-width">
+          {{customer.clientId}}
+        </td>
+        <td class="td-width">
+          <span class="image-text">{{customer.nameV}}</span>
+        </td>
+        <td class="td-width">
+         --> <span class="image-text">{{customer.codeCategory}}</span>
+        </td>
+        <td class="td-width">
+          {{customer.codeValuta}}
+        </td>
+        <td class="td-width">
+          {{customer.patronymic }}
+        </td>
+        <td class="td-width">
+         {{customer.addresType}}
+        </td>
+        <td class="td-width">
+          {{customer.domU}}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <table class="table table-bordered  border p-5" >
+    <tr class="thead text-white">
+      <th>file sent</th>
+      <th>dispatch date</th>
+      <th>Received file</th>
+      <th>date of receipt</th>
+    </tr>
+    <tr>
+      <td>00205045</td>
+      <td>07.01.2021</td>
+      <td>OAR_905487_123454534</td>
+      <td>07.07.2021</td>
+    </tr>
+  </table>
+  <button class="btn btn-outline-secondary cancel-btn" (click)="cancel()">cancel</button>
+</div>
+
+
+
+
+
+
+<p-dialog class="dialog" header="Registration of a new trade organization" [style]="{width: '70vw'}"
+          [(visible)]="displayBasic2"><!--Регистрация новой торговой организации-->
+  <h2 class="h1-title">Registration of a new trade organization</h2>
+  <form class="p-5" #form="ngForm" ngForm="form" (ngSubmit)="onSubmit(form)">
+
+    <fieldset class="border p-3"><!--Блок определения основых параметров заявления-->
+      <legend class="legent">Block for determining the main parameters of the application</legend>
+      <div class="row">
+        <div class="col-md-2 label-block">
+          Client id:
+        </div>
+        <div class="col-md-4">
+          <input type="number" name="clientId" #clientId="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!clientId.valid && clientId.touched" class="help-block text-danger input_span">Please enter a valid client Id!</span>
+
+        </div>
+        <div class="col-md-2 label-block">
+          Client name:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="client" class="form-control inputclass"
+                 ngModel required #client="ngModel">
+          <span *ngIf="!client.valid && client.touched" class="help-block text-danger input_span">Please enter a valid Client name!</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3"><!--Блок определения параметров торговой организации-->
+      <legend class="legent">The block for determining the parameters of a trade organization</legend>
+      <div class="row">
+        <div class="col-md-2 label-block">
+          system name SmartVista:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="smartVista" #smartVista="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!smartVista.valid && smartVista.touched" class="help-block text-danger input_span">Please enter a valid merchantId!</span>
+        </div>
+        <div class="col-md-2  label-block"><!--внешнее имя-->
+          external name:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="nameV" #nameV="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!nameV.valid && nameV.touched"
+                class="help-block text-danger input_span">Please enter a valid!</span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 label-block"><!--код категории-->
+          category code:
+        </div>
+        <div class="col-md-4">
+          <select name="codeCategory" ngModel #code_category="ngModel" id="" class="form-control inputclass">
+            <option disabled></option>
+            <option>123455</option>
+            <option>123455</option>
+            <option>123455</option>
+          </select>
+          <span *ngIf="!code_category.valid && code_category.touched" class="help-block text-danger input_span">Please enter a valid category code!</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3"><!--Блок определения параметров торговой организации-->
+      <legend class="legent">The block for determining the parameters of a trade organization</legend>
+      <div class="row">
+        <div class="col-md-2 label-block">способ регестрации торговой ор
+          method of registering a trade order:
+        </div>
+        <div class="col-md-4">
+          <select name="regTorgov" ngModel #regTorgov="ngModel" class="form-control inputclass">
+            <option disabled></option>
+            <option>123455</option>
+            <option>123455</option>
+            <option>123455</option>
+          </select>
+          <span *ngIf="!regTorgov.valid && regTorgov.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+        </div>
+        <div class="col-md-2  label-block"><!--номер лицензии-->
+          license number:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="numberLisenziya" #numberLisenziya="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!numberLisenziya.valid && numberLisenziya.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3"><!--Кoнтактная информация представителя торговой организации-->
+      <legend class="legent">Contact information of the representative of the trade organization</legend>
+      <div class="row">
+        <div class="col-md-2 label-block"><!--фамилия-->
+          surname:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="lastName" #lastName="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!lastName.valid && lastName.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+        </div>
+        <div class="col-md-2 label-block"><!--Имя-->
+          name:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="name" #name="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!name.valid && name.touched"
+                class="help-block text-danger input_span">Please enter a valid!</span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 label-block"><!--отчество-->
+          patronymic:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="patronymic" #patronymic="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!patronymic.valid && patronymic.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+        </div>
+        <div class="col-md-2 label-block"><!--тип документа-->
+          document type:
+        </div>
+        <div class="col-md-4">
+          <select name="documentType" #documentType="ngModel" ngModel class="form-control inputclass">
+            <option disabled></option>
+            <option>123455</option>
+            <option>123455</option>
+            <option>123455</option>
+          </select>
+          <span *ngIf="!documentType.valid && documentType.touched" class="help-block text-danger input_span">Please enter a valid document type!</span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 label-block"><!--серия документа-->
+          series of documents:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="documentSeries" #documentSeries="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!documentSeries.valid && documentSeries.touched" class="help-block text-danger input_span">Please enter a valid document series!</span>
+        </div>
+        <div class="col-md-2 label-block "><!--Номер документа-->
+          Document number:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="documentNumber" #documentNumber="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!documentNumber.valid && documentNumber.touched" class="help-block text-danger input_span">Please enter a valid document number!</span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 label-block"><!--учреденное,видавшее,документ-->
+          established,seen, document:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="documentV" #documentV="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!documentV.valid && documentV.touched" class="help-block text-danger input_span">Please enter a valid document number!</span>
+        </div>
+        <div class="col-md-2  label-block"><!--дата видачи документ-->
+          date of issue of the document:
+        </div>
+        <div class="col-md-4">
+          <input type="date" name="dataV" #dataV="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!dataV.valid && dataV.touched" class="help-block text-danger input_span">Please enter a valid date!</span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 label-block"><!--должность-->
+          position
+        </div>
+        <div class="col-md-4">
+          <select name="position" ngModel required class="form-control inputclass">
+            <option disabled></option>
+            <option>123455</option>
+            <option>123455</option>
+            <option>123455</option>
+          </select>
+        </div>
+
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3"><!--Блок определения параметров адреса-->
+      <legend class="legent">Address parameter definition block</legend>
+      <div class="row">
+        <div class="col-md-2 label-block"><!-- тип адреса-->
+          address type:
+        </div>
+        <div class="col-md-4">
+          <select name="addresType" ngModel class="form-control inputclass">
+            <option disabled></option>
+            <option>123455</option>
+            <option>123455</option>
+            <option>123455</option>
+          </select>
+        </div>
+        <div class="col-md-2 label-block "><!--улица. дом. и т д-->
+          Street. House. etc:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="domU" #domU="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!domU.valid && domU.touched"
+                class="help-block text-danger input_span">Please enter a valid!</span>
+
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 label-block"><!--город-->
+          town:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="town" #town="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!town.valid && town.touched"
+                class="help-block text-danger input_span">Please enter a valid town!</span>
+
+        </div>
+        <div class="col-md-2  label-block"><!--область-->
+          region:
+        </div>
+        <div class="col-md-4">
+          <select name="region" class="form-control inputclass">
+            <option disabled></option>
+            <option>123455</option>
+            <option>123455</option>
+            <option>123455</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 label-block"><!--трезначный код ISO-->
+          ISO three-digit code:
+        </div>
+        <div class="col-md-4">
+          <select name="isoCode" class="form-control inputclass">
+            <option disabled></option>
+            <option>123455</option>
+            <option>123455</option>
+            <option>123455</option>
+          </select>
+        </div>
+        <div class="col-md-2  label-block"><!-- основ. контакт. телефон-->
+          basics. contact. telephone:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="phoneNumber" #phoneNumber="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!phoneNumber.valid && phoneNumber.touched" class="help-block text-danger input_span">Please enter a valid phone number!</span>
+
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-2 label-block"><!--мобиль. Телефон-->
+          mobile. Telephone:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="mobilePhone" #mobilePhone="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!mobilePhone.valid && mobilePhone.touched" class="help-block text-danger input_span">Please enter a valid mobile phone number!</span>
+
+        </div>
+        <div class="col-md-2 label-block "><!--Адрес элект. почты-->
+          Email address mail:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="email" #email="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!email.valid && email.touched" class="help-block text-danger input_span">Please enter a valid Email!</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3 ">
+      <legend class="legent">Блок определения инициализационных параметров счета</legend>
+      <div class="row">
+        <div class="col-md-2 label-block">
+          номер счета Плательщика:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="schotNumber" #schotNumber="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!schotNumber.valid && schotNumber.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+
+        </div>
+        <div class="col-md-2 label-block ">
+          ISO код валюта:
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="codeValuta" #codeValuta="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!codeValuta.valid && codeValuta.touched" class="help-block text-danger input_span">Please enter a valid valuta code!</span>
+        </div>
+      </div>
+    </fieldset>
+    <button type="submit" class="btn bg-btn mt-3">Формировать</button>
+  </form>
+
+
+</p-dialog>

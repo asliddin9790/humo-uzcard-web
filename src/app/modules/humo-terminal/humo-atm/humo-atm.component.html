@@ -1,0 +1,116 @@
+<div class="component-loader col-md-12  m-2">
+  <div class="atm-header 1">
+    <h5 >{{create}}{{edit}} | ATM Terminal</h5>
+  </div>
+  <div class="atm-form">
+    <form (ngSubmit)="onSubmit()" #fATM="ngForm">
+      <div class="row ">
+        <div class="col-md-2 mt-1">
+          <label for="merchantId">Merchant ID:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="merchantId" [ngModel]="merchantId" name="merchantId" class="form-control inputclass"
+                 ngModel required disabled>
+        </div>
+        <div class="col-md-2 mt-1">
+          <label for="terminal-type">Terminal Type:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-type" class="inputclass form-control" [ngModel]="terminalType" name="terminal-type" ngModel required>
+            <option *ngFor="let ts of humoAtmParemeters.terminalTypes">
+              {{ts}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-md-2"><label for="terminal-kind">Terminal kind:</label></div>
+        <div class="col-md-4">
+          <select id="terminal-kind" class="form-control inputclass" [ngModel]="terminalKind" name="terminal-kind"
+                  ngModel required>
+            <option *ngFor="let tk of humoAtmParemeters.terminalKinds">
+              {{tk}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="guide">Guide:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="guide" class="form-control inputclass" [ngModel]="guide" name="guide" ngModel required>
+            <option *ngFor="let gd of humoAtmParemeters.guides" [value]="gd">
+              {{gd}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-md-2"><label for="point-code-terminal">Point code of the terminal:</label></div>
+        <div class="col-md-4">
+          <input type="text" id="point-code-terminal" [ngModel]="pointCodeTerminal" name="point-code-terminal"
+                 class="form-control inputclass" ngModel required>
+        </div>
+
+        <div class="col-md-2">
+          <label for="terminal-installation-date">Installation Date:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="date" class="datepicker form-control inputclass" data-date-format="dd.mm.yyyy"
+                 id="terminal-installation-date" [ngModel]="installationDate" name="terminal-installation-date" ngModel
+                 required>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-md-2"><label for="terminal-status">Terminal Status:</label></div>
+        <div class="col-md-4">
+          <select id="terminal-status" class="form-control inputclass" [ngModel]="terminalStatus" name="terminal-status"
+                  ngModel required>
+            <option *ngFor="let ts of humoAtmParemeters.terminalStatuses">
+              {{ts}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="number-of-terminal">Number of terminals:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="number-of-terminal" [ngModel]="numberOfTerminal" name="number-of-terminal"
+                 class="form-control inputclass" ngModel required>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-md-2"><label for="terminal-serial-type">Terminal Serial Type:</label></div>
+        <div class="col-md-4">
+          <select id="terminal-serial-type" class="form-control inputclass" [ngModel]="terminalSerialType"
+                  name="terminal-serial-type" ngModel required>-->
+            <option *ngFor="let tt of humoAtmParemeters.terminalSerialTypes">
+              {{tt}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label for="terminal-serial-number">Terminal Serial Number:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="terminal-serial-number" [ngModel]="terminalSerialNumber"
+                 name="terminal-serial-number" class="form-control inputclass" ngModel required>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-md-2"><label for="terminal-serial-type">Terminal Serial Type:</label></div>
+        <div class="col-md-4">
+          <input type="number" id="account" [ngModel]="account" name="account" class="form-control inputclass" ngModel required disabled>
+        </div>
+      </div>
+      <div class="row ">
+        <div class=" button_class">
+          <button type="submit"  class="btn btn-primary " label="Save" [disabled]="!fATM.valid">{{create}}{{edit}}</button>
+          <button type="button" label="Cancel"  class="btn btn-danger " (click)="cancelAtmForm()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

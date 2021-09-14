@@ -1,0 +1,31 @@
+export  class UzcardTerminal {
+  constructor(
+    public clientId: string,
+    public client: string,
+    public smartVista: string,
+    public nameV: string,
+    public codeCategory: string,
+    public regTorgov: string,
+    public numberLisenziya: string,
+    public lastName: string,
+    public name: string,
+    public patronymic: string,
+    public documentType: string,
+    public documentSeries: string,
+    public documentNumber: string,
+    public documentV: string,
+    public dataV: string,
+    public position: string,
+    public addresType: string,
+    public domU: string,
+    public town: string,
+    public region: string,
+    public isoCode: string,
+    public phoneNumber: string,
+    public mobilePhone: string,
+    public email: string,
+    public schotNumber: string,
+    public codeValuta: string,
+  ) {
+  }
+}

@@ -1,0 +1,69 @@
+  <div  style="background: #f1f1f1;overflow-x:hidden">
+  <div>
+    <div>
+      <div class="first-table">
+        <div class="header-text">
+          <h4>Contract | Terminal</h4>
+          <button  ><i class="fa fa-plus" (click)="openContractForm('contractForm','Create')"></i></button>
+        </div>
+        <br>
+        <table style="margin-top: 13px;">
+          <thead>
+          <th class="th-item ">
+            Marchand Id
+            <i class="fa fa-sort" aria-hidden="true"
+            ></i>
+          </th>
+          <th class="th-item">
+            Contract No:
+            <i class="fa fa-sort"
+               aria-hidden="true"></i>
+          </th>
+          <th class="th-item">
+            Contract Date
+            <i class="fa fa-sort"
+               aria-hidden="true"></i>
+          </th>
+          <th class="th-item">
+            Account Number
+            <i class="fa fa-sort"
+               aria-hidden="true"></i>
+          </th>
+          <th class="operation">Action</th>
+          </thead>
+          <tbody>
+          <tr class="tr-hover" *ngFor="let d of contractList | paginate:{itemsPerPage: 9, currentPage:page1}">
+            <td>{{d.merchantId}}</td>
+            <td>{{d.contractNumber}}</td>
+            <td>{{d.contractDate}}</td>
+            <td>{{d.accountNumber}}</td>
+            <td>
+              <div class=" dropdown">
+                <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-bars"></i><span class="caret"></span>
+                </button>
+                <div class="dropdown-menu"  aria-labelledby="dropdownMenuButton">
+                  <ul class="dropdown-toggle">
+                    <li class="dropdown-item"><a style="cursor: pointer"  (click)="editContract(d.merchantId)"><i class="fa fa-edit" aria-hidden="true">Edit</i></a>
+                    </li>
+                    <li class="dropdown-item"><a style="cursor: pointer"><i class="fa fa-trash" aria-hidden="true">Delete</i>
+                    </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+        <div class="pagination-bar">
+          <pagination-controls
+            (pageChange)="page1 = $event">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

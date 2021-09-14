@@ -1,0 +1,68 @@
+<div  style="background: #f1f1f1;overflow-x:hidden">
+  <div>
+    <div>
+      <div class="first-table">
+        <div class="header-text">
+          <h4 class="text-center">ATM | Terminal</h4>
+          <button  ><i class="fa fa-plus" (click)="openAtmForm('atmForm')"></i></button>
+        </div>
+        <br>
+        <table style="margin-top: 13px;">
+          <thead>
+          <th class="th-item ">
+            Marchand Id
+            <i class="fa fa-sort" aria-hidden="true"
+            ></i>
+          </th>
+          <th class="th-item">
+            Date
+            <i class="fa fa-sort"
+               aria-hidden="true"></i>
+          </th>
+          <th class="th-item">
+            Terminal kind
+            <i class="fa fa-sort"
+               aria-hidden="true"></i>
+          </th>
+          <th class="th-item">
+            Terminal type
+            <i class="fa fa-sort"
+               aria-hidden="true"></i>
+          </th>
+          <th class="operation">Action</th>
+          </thead>
+          <tbody>
+          <tr class="tr-hover" *ngFor="let d of terminalList | paginate:{itemsPerPage: 9, currentPage:page}">
+            <td>{{d.merchantId}}</td>
+            <td>{{d.installationDate}}</td>
+            <td>{{d.terminalType}}</td>
+            <td>{{d.terminalKind}}</td>
+            <td>
+              <div class=" dropdown">
+                <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-bars"></i><span class="caret"></span>
+                </button>
+                <div class="dropdown-menu"  aria-labelledby="dropdownMenuButton">
+                  <ul class="dropdown-toggle">
+                    <li class=""><a style="cursor: pointer"><i class="fa fa-edit dropdown-item" (click)="editAtm(d.merchantId)" aria-hidden="true">Edit</i></a>
+                    </li>
+                    <li class="dropdown-item"><a style="cursor: pointer"><i class="fa fa-trash" aria-hidden="true">Delete</i>
+                    </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="pagination-bar">
+          <pagination-controls
+            (pageChange)="page = $event">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

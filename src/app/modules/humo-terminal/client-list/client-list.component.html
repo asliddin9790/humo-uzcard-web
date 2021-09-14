@@ -1,0 +1,376 @@
+<app-subheader-wrapper>
+  <ng-container actions>
+  </ng-container>
+</app-subheader-wrapper>
+<div class="global-loader">
+  <cbs-loader></cbs-loader>
+</div>
+
+<!--Search form-->
+<div class="main_table">
+  <p class="search-title" (click)="onSearchBtn()"><i class="fa fa-angle-up"></i> Search</p>
+  <hr>
+  <fieldset class="border p-5 shadow" *ngIf="searchBtn">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" ngForm="searchForm">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Client Id</span>
+            <input type="text" name="clientId" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Client Status</span>
+            <select required name="clientStatus" ngModel type="text" class="form-control search-input">
+              <option  value="tanlandi">Selects</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Client name</span>
+            <input type="text" name="clientName" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">From date</span>
+            <input type="date" name="date1" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">To date</span>
+            <input type="date" placeholder="dd-mm-yyyy" name="date1" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button type="submit" class=" btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search
+          </button>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+
+</div>
+
+<div class="card table-width">
+  <!--  <div class="m-3 search-title">
+      <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog()"
+                icon="pi pi-user-plus" label="Add New Client"></p-button>
+    </div>
+-->
+  <p-table #dt1 [value]="clientList"
+           [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+           styleClass="p-datatable-gridlines"
+           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [globalFilterFields]="['clientId','clientName','clientStatus']">
+
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex">
+        <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+        <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                       placeholder="Search keyword"/>
+            </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Client Id
+            <p-columnFilter type="text" field="clientId" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Client Name
+            <p-columnFilter type="text" field="clientName" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Client Status
+            <p-columnFilter type="text" field="clientStatus" display="menu"></p-columnFilter>
+          </div>
+        </th>
+
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Actions
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td class="td-width">
+          {{customer.clientId}}
+        </td>
+        <td class="td-width">
+          {{customer.clientName}}
+        </td>
+        <td class="td-width">
+          {{customer.clientStatus}}
+        </td>
+        <td>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(customer)"  class="p-button-success p-mr-2 ch-btn">Excel report</button>
+          <p-button  [style]="{backgroundColor:'#6D90A3'}" class="plus-button" (click)="showBasicDialogAddmerchant(customer)"
+                     icon="pi pi-plus"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+
+
+<!--Add merchant-->
+<p-dialog class="dialog" header="Adding new client(merchant)" [style]="{width: '70vw'}"
+          [(visible)]="openAddMerchant">
+  <h2 class="h1-title">Adding new client(merchant)</h2>
+  <form class="p-5" #form="ngForm" ngForm="form" (ngSubmit)="onSubmit(form)">
+
+
+    <div class="row">
+      <div class="col-md-3 label-block">
+        Client Id:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="client" #client="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.clientId}}" required>
+        <span *ngIf="!client.valid && client.touched" class="help-block text-danger input_span">Please enter a valid client Id!</span>
+
+      </div>
+      <div class="col-md-3 label-block">
+        Client Name:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="clientName" class="form-control inputclass"
+               ngModel="{{customer?.clientName}}"  required #clientName="ngModel">
+        <span *ngIf="!clientName.valid && clientName.touched" class="help-block text-danger input_span">Please enter a valid clientName type !</span>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Client Status:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="clientStatus" #clientStatus="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.clientStatus}}"  required>
+        <span *ngIf="!clientStatus.valid && clientStatus.touched" class="help-block text-danger input_span">Please enter a valid clientStatus !</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Fax machine number - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="FAX" class="form-control inputclass"
+               ngModel="{{customer?.FAX}}"  required #FAX="ngModel">
+        <span *ngIf="!FAX.valid && FAX.touched" class="help-block text-danger input_span">Please enter a valid FAX type !</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Full company name - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="FULL_NAME" #FULL_NAME="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.FULL_NAME}}"  required>
+        <span *ngIf="!FULL_NAME.valid && FULL_NAME.touched" class="help-block text-danger input_span">Please enter a valid FULL_NAME!</span>
+      </div>
+      <div class="col-md-3  label-block"><!--внешнее имя-->
+        Legal address - country code - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="CNTRY" #CNTRY="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.CNTRY}}"  required>
+        <span *ngIf="!CNTRY.valid && CNTRY.touched"
+              class="help-block text-danger input_span">Please enter a valid CNTRY!</span>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Legal address - city - type:
+      </div>
+      <div class="col-md-3">
+        <input name="CITY" ngModel="{{customer?.CITY}}"  #CITY="ngModel" id="" class="form-control inputclass">
+        <span *ngIf="!CITY.valid && CITY.touched"
+              class="help-block text-danger input_span">Please enter a valid CITY !</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Company registration number - type:
+      </div>
+      <div class="col-md-3">
+        <input name="REG_NR" ngModel="{{customer?.REG_NR}}"  #REG_NR="ngModel" class="form-control inputclass">
+        <span *ngIf="!REG_NR.valid && REG_NR.touched" class="help-block text-danger input_span">Please enter a valid REG_NR!</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3  label-block">
+        Legal address - street - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="STREET" #STREET="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.STREET}}"  required>
+        <span *ngIf="!STREET.valid && STREET.touched" class="help-block text-danger input_span">Please enter a valid STREET!</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Legal address - postal code - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="POST_IND" #POST_IND="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.POST_IND}}"  required>
+        <span *ngIf="!POST_IND.valid && POST_IND.touched" class="help-block text-danger input_span">Please enter a valid POST_IND!</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Legal address - telephone - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="PHONE" #PHONE="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.PHONE}}"  required>
+        <span *ngIf="!PHONE.valid && PHONE.touched"
+              class="help-block text-danger input_span">Please enter a valid PHONE!</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Legal address - contact person - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="CONT_PERSON" #CONT_PERSON="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.CONT_PERSON}}"  required>
+        <span *ngIf="!CONT_PERSON.valid && CONT_PERSON.touched" class="help-block text-danger input_span">Please enter a valid CONT_PERSON!</span>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+
+      <div class="col-md-3 label-block">
+        Company MCC code - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="MCC" #MCC="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.MCC}}"  required>
+        <span *ngIf="!MCC.valid && MCC.touched" class="help-block text-danger input_span">Please enter a valid CONT_PERSON!</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Physical address - state code - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="P_CNTRY" #P_CNTRY="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.P_CNTRY}}"  required>
+        <span *ngIf="!P_CNTRY.valid && P_CNTRY.touched" class="help-block text-danger input_span">Please enter a valid P_CNTRY!</span>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block ">
+        Physical address - city - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="P_CITY" #P_CITY="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.P_CITY}}"  required>
+        <span *ngIf="!P_CITY.valid && P_CITY.touched" class="help-block text-danger input_span">Please enter a valid P_CITY!</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Physical address - street - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="P_STREET" #P_STREET="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.P_STREET}}"  required>
+        <span *ngIf="!P_STREET.valid && P_STREET.touched" class="help-block text-danger input_span">Please enter a valid P_STREET!</span>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3  label-block">
+        Physical address - postal code - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="P_POST_IND" #P_POST_IND="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.P_POST_IND}}"  required>
+        <span *ngIf="!P_POST_IND.valid && P_POST_IND.touched" class="help-block text-danger input_span">Please enter a valid P_POST_IND!</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Physical address - telephone- type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="MRC_PHONE" #MRC_PHONE="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.MRC_PHONE}}"  required>
+        <span *ngIf="!MRC_PHONE.valid && MRC_PHONE.touched" class="help-block text-danger input_span">Please enter a valid P_POST_IND!</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Group code for printing reports - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="REPORT_CRIT" #REPORT_CRIT="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.REPORT_CRIT}}"  required>
+        <span *ngIf="!REPORT_CRIT.valid && REPORT_CRIT.touched" class="help-block text-danger input_span">Please enter a valid REPORT_CRIT!</span>
+      </div>
+      <div class="col-md-3 label-block ">
+        Electronic mail address - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="E_MAIL" #E_MAIL="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.E_MAIL}}"  required>
+        <span *ngIf="!E_MAIL.valid && E_MAIL.touched"
+              class="help-block text-danger input_span">Please enter a valid E_MAIL!</span>
+
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Additional information - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="ADD_INFO" #ADD_INFO="ngModel" class="form-control inputclass"
+               ngModel="{{customer?.ADD_INFO}}"  required>
+        <span *ngIf="!ADD_INFO.valid && ADD_INFO.touched"
+              class="help-block text-danger input_span">Please enter a valid ADD_INFO!</span>
+      </div>
+      <div class="col-md-3  label-block">
+        Code of group for printing reports - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="REPORT_CRIT2" #REPORT_CRIT2="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!REPORT_CRIT2.valid && REPORT_CRIT2.touched"
+              class="help-block text-danger input_span">Please enter a valid REPORT_CRIT2!</span>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        User field - type:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="USER_FIELD" #USER_FIELD="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!USER_FIELD.valid && USER_FIELD.touched"
+              class="help-block text-danger input_span">Please enter a valid USER_FIELD!</span>
+      </div>
+    </div>
+
+    <button type="button" (click)="onCancel(form)" class="btn bg-btn mt-3">Cancel</button>
+    <button type="submit" class="btn bg-btn mt-3 ml-3">Save</button>
+  </form>
+</p-dialog>

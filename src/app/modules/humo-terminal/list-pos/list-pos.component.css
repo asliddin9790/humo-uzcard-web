@@ -1,0 +1,198 @@
+.first-table {
+  margin-bottom: 10px;
+  right: -15px;
+  position: relative;
+  background-color: #fff;
+  padding: 10px;
+  /*height: 400px;*/
+  font-size: smaller;
+}
+
+.table-head {
+  background-color: #6D8FA2;
+  color: aliceblue;
+}
+
+.th-item {
+  width: 12px !important;
+  border-right-color: #4F4F51;
+  float: top;
+  height: 8px !important;
+  padding: 10px;
+}
+
+.table-icon-button {
+  background-color: #6D8FA2;
+}
+
+.tr-hover:hover {
+  background-color: #ABDFFD;
+  cursor: pointer;
+}
+
+.new-loan-button {
+  position: relative;
+  color: #84A1BA;
+  font-family: Bahnschrift, serif;
+  left: 76px;
+  top: 28px;
+}
+
+.pagination-bar {
+  text-align: center;
+  font-size: 16px;
+  padding-top: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+table button {
+  height: 26px;
+  width: 36px;
+  padding: 4px;
+}
+
+.th-item {
+  height: 36px !important;
+  padding-top: 4px;
+  width: 26px;
+  background-color: #84A1BA;
+  color: #fff;
+}
+
+table tbody td {
+  padding: 4px;
+}
+
+.name_of_client {
+  background-color: #84A1BA;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.first-table thead .th-item, .th-item_name_of_client {
+  cursor: pointer;
+}
+
+.operation {
+  height: 36px !important;
+  padding-top: 4px;
+  width: 26px;
+  background-color: #84A1BA;
+  color: #fff;
+}
+
+.first-table thead .fa-sort {
+  font-size: 18px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.th-item {
+  width: 10px !important;
+}
+
+.marchand_id .btn-group .dropdown-toggle {
+  color: #FFFFFF;
+}
+
+.name_of_client .btn-group .table-icon-button {
+  color: #FFFFFF;
+}
+
+.search-section {
+  width: 150px;
+  height: 230px;
+  background-color: #FFFFFF;
+  position: absolute;
+  top: 40px;
+  z-index: 999;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.dropdown .dropdown-menu {
+  min-width: 100px;
+}
+
+.dropdown .dropdown-menu ul li {
+  list-style: none;
+}
+
+.dropdown .dropdown-menu ul li a {
+  color: #FFFFFF;
+}
+
+.header-text h4 {
+  width: 100%;
+  color: #FFFFFF;
+  height: 40px;
+
+
+}
+.header-text h4 {
+  width: 100%;
+  color: #FFFFFF;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.header-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: center;
+  background-color: #84A1BA;
+  height: 40px;
+}
+.header-text button{
+  background-color:#84A1BA;
+  border: none;
+  color: #FFFFFF;
+  margin-right: 23px;
+  font-size: 18px;
+}
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: .255em;
+  vertical-align: .255em;
+  content: none!important;
+  border-top: .3em solid;
+  border-right: .7em solid transparent;
+  border-bottom: 0;
+  border-left: .5em solid transparent;
+}
+.dropdown-toggle{
+  background-color: #FFFFFF;
+  color: #101820;
+  padding-left: 2px;
+  padding-bottom: 0!important;
+}
+.dropdown-toggle i{
+  padding: 2px;
+  font-size: 12px;
+  color: #101820;
+}
+tbody tr td{
+  font-size: 14px;
+}
+tbody tr td{
+  font-size: 14px;
+}
+thead th{
+  font-size: 14px;
+}
+.operation{
+  font-size: 14px;
+}
+
+
+
+
+
+

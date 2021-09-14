@@ -1,0 +1,180 @@
+
+<div class="component-loader col-md-12  m-2">
+  <div class="post-header">
+    <h5>{{create}}{{edit}} POS Terminal</h5>
+  </div>
+  <hr>
+  <div class="post-form">
+    <form (ngSubmit)="onSubmit()" #fPOS="ngForm">
+      <div class= "row">
+        <div class="col-md-2  ">
+          <label for="merchantId">Merchant ID:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="merchantId" [ngModel]="merchantId" name="merchantId" class="form-control inputclass"
+                 ngModel required>
+        </div>
+        <div class="col-md-2  ">
+          <label for="terminal-type">Terminal Type:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-type" class="form-control inputclass" [ngModel]="terminalType" name="terminal-type"
+                  ngModel required>-->
+            <option *ngFor="let ts of humoPOSParameters.terminalTypes">
+              {{ts}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2  ">
+          <label for="terminal-kind">Terminal kind:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-kind" class="form-control inputclass" [ngModel]="terminalKind" name="terminal-kind"
+                  ngModel required>
+            <option *ngFor="let tk of humoPOSParameters.terminalKinds">
+              {{tk}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2  ">
+          <label for="guide">Guide:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="guide" class="form-control inputclass" [ngModel]="guide" name="guide" ngModel required>
+            <option *ngFor="let gd of humoPOSParameters.guides">
+              {{gd}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2  ">
+          <label for="point-code-terminal">Point code of the terminal:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="point-code-terminal" class="form-control inputclass" placeholder="M10101M13146"
+                 [ngModel]="pointCodeTerminal" name="point-code-terminal" ngModel required>
+        </div>
+        <div class="col-md-2  ">
+          <label for="terminal-installation-date">Installation Date:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="date" class="datepicker form-control inputclass" data-date-format="dd.mm.yyyy"
+                 id="terminal-installation-date" [ngModel]="installationDate" name="terminal-installation-date" ngModel
+                 required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2  ">
+          <label for="terminal-status">Terminal Status:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-status" class="form-control inputclass" [ngModel]="terminalStatus" name="terminal-status"
+                  ngModel required>
+            <option *ngFor="let ts of humoPOSParameters.terminalStatuses">
+              {{ts}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2  ">
+          <label for="number-of-terminal">Number of terminals:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="number-of-terminal" class="form-control inputclass" placeholder="1"
+                 [ngModel]="numberOfTerminal" name="number-of-terminal" ngModel required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2  ">
+          <label for="terminal-model">Terminal Model:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-model" class="form-control inputclass" [ngModel]="terminalModel" name="terminal-model"
+                  ngModel required>
+            <option *ngFor="let tm of humoPOSParameters.terminalModels">
+              {{tm}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2  ">
+          <label for="connection-interface">Connection Interface:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="connection-interface" class="form-control inputclass" [ngModel]="connectionInterface"
+                  name="connection-interface" ngModel required>
+            <option *ngFor="let ci of humoPOSParameters.connectionInterfaces">
+              {{ci}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2  ">
+          <label for="host-connection-method">Host Connection Method:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="host-connection-method" class="form-control inputclass" [ngModel]="hostConnectionMethod"
+                  name="host-connection-method" ngModel required>
+            <option *ngFor="let cm of humoPOSParameters.hostConnectionMethods">
+              {{cm}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2  ">
+          <label for="tmc-server-account">TMC Server Account:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="tmc-server-account" class="form-control inputclass" [ngModel]="tmcServerAccount"
+                  name="tmc-server-account" ngModel required>
+            <option *ngFor="let tmca of humoPOSParameters.tmcServerAccounts">
+              {{tmca}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2  ">
+          <label for="terminal-business-type">Termoinal Business Type:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="terminal-business-type" class="form-control inputclass" [ngModel]="terminalBusinessType"
+                  name="terminal-business-type" ngModel required>
+            <option *ngFor="let tbt of humoPOSParameters.terminalBusinessTypes">
+              {{tbt}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2  ">
+          <label for="configurable-host-connection-method">Configurable Method of Connecting TMC Host:</label>
+        </div>
+        <div class="col-md-4">
+          <select id="configurable-host-connection-method" class="form-control inputclass"
+                  [ngModel]="configurableHostConnectionMethod" name="configurable-host-connection-method" ngModel
+                  required>
+            <option *ngFor="let chcm of humoPOSParameters.configurableHostConnectionMethods">
+              {{chcm}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label for="account">Account:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="account" class="form-control inputclass" placeholder="23508000200950907200"
+                 [ngModel]="account" name="account" ngModel required>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class=" button_class" style="margin-bottom: 100px!important;">
+          <button type="submit" class="btn btn-primary " label="Save" [disabled]="!fPOS.valid">{{create}}{{edit}}  </button>
+          <button type="button" label="Cancel" class="btn btn-danger" (click)="cancelPosForm()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

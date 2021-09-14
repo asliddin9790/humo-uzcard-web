@@ -1,0 +1,405 @@
+<app-subheader-wrapper>
+  <ng-container actions>
+  </ng-container>
+</app-subheader-wrapper>
+<div class="global-loader">
+  <cbs-loader></cbs-loader>
+</div>
+
+<!--Search form-->
+<div class="main_table ">
+  <p class="search-title" (click)="onSearchBtn()"><i class="fa fa-angle-up"></i> Search</p>
+  <hr>
+  <fieldset class="border p-5 shadow" *ngIf="searchBtn">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" ngForm="searchForm">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Merchant id</span>
+            <input type="text" name="merchantId" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Status</span>
+            <select required name="merchantId" ngModel type="text" class="form-control search-input">
+              <option *ngFor="let m of status" value="{{m.status}}">{{m.status}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Client name</span>
+            <input type="text" name="clientName" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">From date</span>
+            <input type="date" name="date1" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">To date</span>
+            <input type="date" placeholder="dd-mm-yyyy" name="date1" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Terminal number</span>
+            <input type="text" name="date1" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button type="submit" class="search-btn btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search
+          </button>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+
+</div>
+
+<div class="card table-width">
+  <div class="m-3 search-title">
+    <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog2()"
+              icon="pi pi-credit-card" label="+"></p-button>
+  </div>
+
+  <p-table #dt1 [value]="humoTerminalMod"
+           [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+           styleClass="p-datatable-gridlines"
+           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [globalFilterFields]="['terminalId','merchantId','terminalStatus','terminalSerialNumber']">
+
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex">
+        <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+        <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                       placeholder="Search keyword"/>
+            </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Terminal Id
+            <p-columnFilter type="text" field="terminalId" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Merchant id
+            <p-columnFilter type="text" field="merchantId" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Terminal status
+            <p-columnFilter type="text" field="terminalStatus" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Serial number of terminal
+            <p-columnFilter type="text" field="terminalSerialNumber" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Operations
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td class="td-width">
+          {{customer.terminalId}}
+        </td>
+        <td class="td-width">
+          {{customer.merchantId}}
+        </td>
+        <td class="td-width">
+          {{customer.terminalStatus}}
+        </td>
+        <td class="td-width">
+          {{customer.terminalSerialNumber }}
+        </td>
+        <td>
+          <button type="button" pButton pRipple icon="pi pi-user-edit" (click)="openUpdate(customer)"  class="p-button-info p-mr-2 ch-btn">Update </button>
+          <button type="button" pButton pRipple  (click)="onDeleteTerminal(customer)" class="btn btn-danger ml-2 ch-btn"  icon="pi pi-user-minus">Delete </button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!--  <table class="table table-bordered  border p-5" >
+      <tr class="thead text-white">
+        <th>file sent</th>
+        <th>dispatch date</th>
+        <th>Received file</th>
+        <th>date of receipt</th>
+      </tr>
+      <tr>
+        <td>00205045</td>
+        <td>07.01.2021</td>
+        <td>OAR_905487_123454534</td>
+        <td>07.07.2021</td>
+      </tr>
+    </table>-->
+  <!--  <button class="btn btn-outline-secondary cancel-btn" (click)="cancel()">cancel</button>-->
+</div>
+
+
+<!--Add Humo terminal-->
+<p-dialog class="dialog" header="Adding new client(terminal)" [style]="{width: '70vw'}"
+          [(visible)]="displayBasic2">
+  <h2 class="h1-title">Adding new client (terminal)</h2>
+  <form class="p-5" #form="ngForm" ngForm="form" (ngSubmit)="onSubmit(form)">
+
+
+    <div class="row">
+      <div class="col-md-3 label-block">
+        Merchant id :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="merchantId" #merchantId="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!merchantId.valid && merchantId.touched" class="help-block text-danger input_span">Please enter a valid merchantId Id!</span>
+
+      </div>
+      <div class="col-md-3 label-block">
+        Terminal type :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalType" class="form-control inputclass"
+               ngModel required #terminalType="ngModel">
+        <span *ngIf="!terminalType.valid && terminalType.touched" class="help-block text-danger input_span">Please enter a valid terminalType type !</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Purpose of terminal :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalKind" #terminalKind="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!terminalKind.valid && terminalKind.touched" class="help-block text-danger input_span">Please enter a valid terminalKind!</span>
+      </div>
+      <div class="col-md-3  label-block"><!--внешнее имя-->
+        References:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="guide" #guide="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!guide.valid && guide.touched"
+              class="help-block text-danger input_span">Please enter a valid guide!</span>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Point code of terminal :
+      </div>
+      <div class="col-md-3">
+        <input name="pointCodeTerminal" ngModel #pointCodeTerminal="ngModel" class="form-control inputclass">
+        <span *ngIf="!pointCodeTerminal.valid && pointCodeTerminal.touched"
+              class="help-block text-danger input_span">Please enter a valid pointCodeTerminal !</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Current date:
+      </div>
+      <div class="col-md-3">
+        <input type="date" name="installationDate" ngModel #installationDate="ngModel" class="form-control inputclass">
+        <span *ngIf="!installationDate.valid && installationDate.touched" class="help-block text-danger input_span">Please enter a valid installationDate!</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+
+      <div class="col-md-3  label-block">
+        Terminal Status:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalStatus" #terminalStatus="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!terminalStatus.valid && terminalStatus.touched" class="help-block text-danger input_span">Please enter a valid terminalStatus!</span>
+      </div>
+      <div class="col-md-3 label-block">
+        Inventory number of the terminal:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalInventoryNumber" #terminalInventoryNumber="ngModel"
+               class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!terminalInventoryNumber.valid && terminalInventoryNumber.touched"
+              class="help-block text-danger input_span">Please enter a valid terminalInventoryNumber!</span>
+      </div>
+
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Serial number of terminal:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalSerialType" #terminalSerialType="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!terminalSerialType.valid && terminalSerialType.touched"
+              class="help-block text-danger input_span">Please enter a valid terminalSerialType!</span>
+      </div>
+
+      <div class="col-md-3 label-block">
+        Terminal Model :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="terminalSerialNumber" #terminalSerialNumber="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!terminalSerialNumber.valid && terminalSerialNumber.touched"
+              class="help-block text-danger input_span">Please enter a valid terminalSerialNumber!</span>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Interface for connection :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="interfaceConnection" #interfaceConnection="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!interfaceConnection.valid && interfaceConnection.touched"
+              class="help-block text-danger input_span">Please enter a valid interfaceConnection!</span>
+      </div>
+      <div class="col-md-3 label-block ">
+        Connection method with host :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="connectionHost" #connectionHost="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!connectionHost.valid && connectionHost.touched" class="help-block text-danger input_span">Please enter a valid connectionHost!</span>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Account TMC server :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="accountTMC" #accountTMC="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!accountTMC.valid && accountTMC.touched" class="help-block text-danger input_span">Please enter a valid accountTMC!</span>
+      </div>
+      <div class="col-md-3  label-block">
+        Configurable method of connecting to TMC host in the future:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="configTMC" #configTMC="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!configTMC.valid && configTMC.touched" class="help-block text-danger input_span">Please enter a valid P_POST_IND!</span>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Terminal type :
+      </div>
+      <div class="col-md-3">
+        <input type="date" name="terminalType2" #terminalType2="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!terminalType2.valid && terminalType2.touched" class="help-block text-danger input_span">Please enter a valid terminalType2!</span>
+      </div>
+
+      <div class="col-md-3 label-block">
+        Transitory account – Get from core banking:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="accountTransitory" #accountTransitory="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!accountTransitory.valid && accountTransitory.touched" class="help-block text-danger input_span">Please enter a valid accountTransitory!</span>
+      </div>
+    </div>
+    <button type="button" (click)="onCancel(form)" class="btn bg-btn mt-3">Cancel</button>
+    <button type="submit" class="btn bg-btn mt-3 ml-3">Save</button>
+  </form>
+</p-dialog>
+
+
+<!--Update humo terminal-->
+
+<!--Humo0terminal old version :)-->
+<!--<div class="container-fluid " style="background: #f1f1f1;overflow-x:hidden">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="first-table">
+        <div class="header-text"><h4>Humo | Terminal</h4></div>
+        <div class="p-table ">
+        <p-table  *ngIf="humoTerminal" [value]="humoTerminal" [paginator]="true" [rows]="5"  [rowsPerPageOptions]="[5,10]">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th class="th-item operation">Merchant ID</th>
+                  <th class="operation">Client Name</th>
+                  <th class="operation">Operation</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-humoTerminal>
+              <tr class="tr-hover">
+                  <td>{{humoTerminal.merchantId}}</td>
+                  <td>{{humoTerminal.clientName}}</td>
+                  <td>
+                    <div class="dropdown">
+                      <button  class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-info"></i>
+                      </button>
+                      <div class="dropdown-menu">
+                      <ul >
+                        <li class="dropdown-item">
+                          <a style="cursor: pointer">
+                            <i  (click)="listAtm('atmList')" aria-hidden="true">ATM</i>
+                          </a>
+                        </li>
+
+                        <li class="dropdown-item">
+                          <a style="cursor: pointer">
+                            <i  (click)="listPost('posList')" aria-hidden="true">POS</i>
+                          </a>
+                        </li>
+
+                        <li class="dropdown-item">
+                          <a style="cursor: pointer">
+                            <i  (click)="listEpos('ePosList')" aria-hidden="true">EPOS</i>
+                          </a>
+                        </li>
+
+                        <li class="dropdown-item">
+                          <a style="cursor: pointer">
+                            <i  (click)="listContract('contractList')" aria-hidden="true">CONTRACT</i>
+                          </a>
+                        </li>
+                      </ul>
+                      </div>
+                    </div>
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
+        </div>
+      </div>
+    </div>
+    <div id="rightContent" class="col-md-6 ml-1">
+    </div>
+  </div>
+</div>-->

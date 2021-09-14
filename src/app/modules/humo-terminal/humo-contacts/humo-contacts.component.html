@@ -1,0 +1,442 @@
+<app-subheader-wrapper>
+  <ng-container actions>
+  </ng-container>
+</app-subheader-wrapper>
+<div class="global-loader">
+  <cbs-loader></cbs-loader>
+</div>
+
+<!--Search form-->
+<div class="main_table">
+  <p class="search-title" (click)="onSearchBtn()"><i class="fa fa-angle-up"></i> Search</p>
+  <hr>
+  <fieldset class="border p-5 shadow" *ngIf="searchBtn">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" ngForm="searchForm">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Sequence number</span>
+            <input type="text" name="secNumber" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Merchant id</span>
+            <input type="text" name="merchantId" ngModel class="form-control search-input">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Contract type</span>
+            <select required name="merchantId" ngModel type="text" class="form-control search-input">
+              <option *ngFor="let m of contractTpye" value="{{m.contract}}">{{m.contract}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group mb-3">
+            <span class="input-group-text span">Contract status</span>
+            <select required name="contractStatus" ngModel type="text" class="form-control search-input">
+              <option *ngFor="let s of contractStatus" value="{{s.status}}">{{s.status}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class=" btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search</button>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+
+</div>
+
+<div class="card table-width">
+  <div class="m-3 search-title" *ngIf="showAddButton">
+    <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog2()"
+              icon="pi pi-credit-card" label="+"></p-button>
+  </div>
+
+  <p-table #dt1 [value]="humoMerchant"
+           [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+           styleClass="p-datatable-gridlines"
+           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [globalFilterFields]="['AGR_NUMBER','MERCHANT','IMPRINT_FEE','STATUS']">
+
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex">
+        <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+        <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                       placeholder="Search keyword"/>
+            </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Merchant id
+            <p-columnFilter type="text" field="MERCHANT" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Contract number
+            <p-columnFilter type="text" field="ABRV_NAME" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Date of contract
+            <p-columnFilter type="text" field="IMPRINT_FEE" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Main account with branch code
+            <p-columnFilter type="text" field="ACQ_BRANCH" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Operations
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td class="td-width">
+          {{customer.MERCHANT}}
+        </td>
+        <td class="td-width">
+          {{customer.ABRV_NAME}}
+        </td>
+        <td class="td-width">
+          {{customer.FAX}}
+        </td>
+        <td class="td-width">
+          {{customer.REG_NR }}
+        </td>
+        <td class="td-width">
+          <button type="button" pButton pRipple icon="pi pi-user-edit"(click)="onEdited(customer)"  class="p-button-info p-mr-2 ch-btn">Update </button>
+          <button type="button" pButton pRipple (click)="onDeletedContract(customer)" class="btn btn-danger ml-2 ch-btn"  icon="pi pi-user-minus">Delete </button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!--Add new contract-->
+<!--<p-dialog class="dialog" header="Adding new client(Contract)" [style]="{width: '70vw'}"
+          [(visible)]="displayBasic2">
+  <h2 class="h1-title">Adding new client(Contract)</h2>
+&lt;!&ndash;  <form class="p-5" #form="ngForm" ngForm="form" (ngSubmit)="onSubmit(form)">
+
+
+    <div class="row">
+      <div class="col-md-3 label-block">
+        Код предприятия:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="MERCHANT" #MERCHANT="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!MERCHANT.valid && MERCHANT.touched" class="help-block text-danger input_span">Please enter a valid MERCHANT Id!</span>
+
+      </div>
+      <div class="col-md-3 label-block">
+        Номер договора:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="AGR_NUMBER" class="form-control inputclass"
+               ngModel required #AGR_NUMBER="ngModel">
+        <span *ngIf="!AGR_NUMBER.valid && AGR_NUMBER.touched" class="help-block text-danger input_span">Please enter a valid AGR_NUMBER type !</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Date of contract:
+      </div>
+      <div class="col-md-3">
+        <input type="date" name="AGR_DATE" #AGR_DATE="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!AGR_DATE.valid && AGR_DATE.touched" class="help-block text-danger input_span">Please enter a valid FULL_NAME!</span>
+      </div>
+      <div class="col-md-3  label-block">&lt;!&ndash;внешнее имя&ndash;&gt;
+        Номер счёта банка:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="ACQ_BRANCH" #BANK_ACCOUNT="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!BANK_ACCOUNT.valid && BANK_ACCOUNT.touched"
+              class="help-block text-danger input_span">Please enter a valid BANK_ACCOUNT!</span>
+      </div>
+    </div>
+<fieldset class="border p-5 shadow">
+  <legend>Комисси</legend>
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Kомиссионные с предприятий за транзакции, совершенные с РOS терминалов (процентная ставка).:
+      </div>
+      <div class="col-md-3">
+        <input type="date" name="AGR_DATE" #IMPRINT_FEE="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!IMPRINT_FEE.valid && IMPRINT_FEE.touched" class="help-block text-danger input_span">Please enter a valid IMPRINT_FEE!</span>
+      </div>
+      <div class="col-md-3  label-block">&lt;!&ndash;внешнее имя&ndash;&gt;
+        Минимальная плата за транзакции, совершенные с POS терминалов, в минимальных единицах валюты:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="POS_MIN" #POS_MIN="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!POS_MIN.valid && POS_MIN.touched"
+              class="help-block text-danger input_span">Please enter a valid ACQ_BRANCH!</span>
+      </div>
+    </div>
+</fieldset>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Kомиссионные с предприятий за транзакции, совершенные с РOS терминалов (процентная ставка).:
+      </div>
+      <div class="col-md-3">
+        <input type="date" name="AGR_DATE" #IMPRINT_FEE="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!IMPRINT_FEE.valid && IMPRINT_FEE.touched" class="help-block text-danger input_span">Please enter a valid IMPRINT_FEE!</span>
+      </div>
+      <div class="col-md-3  label-block">&lt;!&ndash;внешнее имя&ndash;&gt;
+        Минимальная плата за транзакции, совершенные с POS терминалов, в минимальных единицах валюты:
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="POS_MIN" #POS_MIN="ngModel" class="form-control inputclass"
+               ngModel required>
+        <span *ngIf="!POS_MIN.valid && POS_MIN.touched"
+              class="help-block text-danger input_span">Please enter a valid ACQ_BRANCH!</span>
+      </div>
+    </div>
+
+
+    <button type="submit" (click)="onCancel(form)" class="btn bg-btn mt-3">Cancel</button>
+    <button type="submit"  class="btn bg-btn mt-3 ml-3">Save</button>
+  </form>&ndash;&gt;
+
+
+</p-dialog>-->
+
+<p-dialog class="dialog" header="Registration of a new trade organization" [style]="{width: '70vw'}"
+          [(visible)]="displayBasic2"><!--Регистрация новой торговой организации-->
+  <h2 class="h1-title">Registration of a new trade organization</h2>
+  <form class="p-5" #form="ngForm" ngForm="form" (ngSubmit)="onSubmit(form)">
+
+    <fieldset class="border p-3">
+      <legend class="legent"><img src="../assets/img/humo.png" width="45px" alt="humo-card.png"> HUMO Contracts</legend>
+      <div class="row">
+        <div class="col-md-4 label-block">
+          Merchant ID:
+        </div>
+        <div class="col-md-2">
+          <input type="number" name="merchantId" #merchantId="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!merchantId.valid && merchantId.touched" class="help-block text-danger input_span">Please enter a valid merchant Id!</span>
+
+        </div>
+        <div class="col-md-4 label-block">
+          Number of Contract:
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="numberOfContract" class="form-control inputclass"
+                 ngModel required #numberOfContract="ngModel">
+          <span *ngIf="!numberOfContract.valid && numberOfContract.touched" class="help-block text-danger input_span">Please enter a valid Client name!</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3"><!--Блок определения параметров торговой организации-->
+      <legend class="legent">The block for determining the parameters of a trade organization</legend>
+      <div class="row mt-3">
+        <div class="col-md-4 label-block">
+          Contract Conclusion Date:
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="smartVista" #dateOfContract="ngModel" class="form-control inputclass" data-date-format="dd.mm.yyyy"
+                 ngModel required>
+          <span *ngIf="!dateOfContract.valid && dateOfContract.touched" class="help-block text-danger input_span">Please enter a valid merchantId!</span>
+        </div>
+      </div>
+
+
+
+
+
+
+    </fieldset>
+    <fieldset class="border p-3 mt-3">
+      <legend class="legent"><img src="../assets/img/humo.png" width="45px" alt="humo-card.png"> Domestic | HUMO</legend>
+      <div class="row">
+        <div class="col-md-4 label-block">Commission from the companies for transactions made at POS
+          terminals (the interest rate):
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="humoCommisson" #humoCommisson="ngModel" class="form-control inputclass" data-date-format="dd.mm.yyyy" id="contract-date"
+                 ngModel required>
+          <span *ngIf="!humoCommisson.valid && humoCommisson.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+        </div>
+        <div class="col-md-4  label-block"><!--номер лицензии-->
+          Minimum fee for transactons made from POS Terminals in minimum
+          currency units:
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="humoFees" #humoFees="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!humoFees.valid && humoFees.touched" class="help-block text-danger input_span">Please enter a valid humoFees!</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3">
+      <legend class="legent"><img src="../assets/img/visa-card.png" width="45px" alt="visa-card.png"> International | VISA</legend>
+      <div class="row">
+        <div class="col-md-4 label-block"><!--фамилия-->
+          Commission from the companies for transactions
+          made at POS terminals (the interest rate):
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="lastName" #internationalVisaCommission="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!internationalVisaCommission.valid && internationalVisaCommission.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+        </div>
+        <div class="col-md-4 label-block">
+          Minimum fee for transactons made from POS Terminals
+          in minimum currency units:
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="internationalVisaFees" #internationalVisaFees="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!internationalVisaFees.valid && internationalVisaFees.touched"
+                class="help-block text-danger input_span">Please enter a valid internationalVisaFees!</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3">
+      <legend class="legent"><img src="../assets/img/master-card.png" width="45px" alt="master-card.png"> International | Mastercard</legend>
+      <div class="row">
+        <div class="col-md-4 label-block"><!-- тип адреса-->
+          Commission from the companies for transactions made at POS
+          terminals (the interest rate):
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="masterCommission" #masterCommission="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!masterCommission.valid && masterCommission.touched"
+                class="help-block text-danger input_span">Please enter a valid masterCommission!</span>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset class="border p-3 mt-3 ">
+      <legend class="legent"><img src="../assets/img/visa-card.png" width="45px" alt="visa-card.png"> Domestic | VISA</legend>
+      <div class="row">
+        <div class="col-md-4 label-block">
+          Minimum fee for transactons made from POS Terminals in minimum
+          currency units:
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="masterFees" #masterFees="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!masterFees.valid && masterFees.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+
+        </div>
+        <div class="col-md-4 label-block ">
+          ICommission from the companies for transactions made at
+          POS terminals (the interest rate):
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="localVisaCommission" #localVisaCommission="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!localVisaCommission.valid && localVisaCommission.touched" class="help-block text-danger input_span">Please enter a valid valuta code!</span>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4 label-block">
+          Commission from the companies for transactions made at POS
+          terminals (the interest rate):
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="localVisaFees" #localVisaFees="ngModel" class="form-control inputclass"
+                 ngModel required>
+          <span *ngIf="!localVisaFees.valid && localVisaFees.touched" class="help-block text-danger input_span">Please enter a valid!</span>
+
+        </div>
+
+      </div>
+    </fieldset>
+    <button type="submit" class="btn bg-btn mt-3">Формировать</button>
+  </form>
+
+
+</p-dialog>
+
+
+
+
+
+
+<!--Update contract form-->
+<p-dialog class="dialog" header="Update Client Contract" [style]="{width: '70vw'}"
+          [(visible)]="displayBasicUpdate">
+  <h2 class="h1-title">Update Client Contract</h2>
+  <form class="p-5" #updateForm="ngForm" ngForm="updateForm" (ngSubmit)="onSubmitUpdate(updateForm)">
+
+
+    <div class="row">
+      <div class="col-md-3 label-block">
+        Merchant id :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="MERCHANT" #MERCHANT="ngModel" class="form-control inputclass"  ngModel="{{editContract?.MERCHANT}}"
+               required>
+        <span *ngIf="!MERCHANT.valid && MERCHANT.touched" class="help-block text-danger input_span">Please enter a valid MERCHANT Id</span>
+
+      </div>
+      <div class="col-md-3 label-block">
+        Contract number :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="ABRV_NAME" class="form-control inputclass"  ngModel="{{editContract?.ABRV_NAME}}"
+               required #ABRV_NAME="ngModel">
+        <span *ngIf="!ABRV_NAME.valid && ABRV_NAME.touched" class="help-block text-danger input_span">Contract number</span>
+      </div>
+    </div>
+
+
+    <div class="row mt-3">
+      <div class="col-md-3 label-block">
+        Date of contract :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="FAX" #FAX="ngModel" class="form-control inputclass"  ngModel="{{editContract?.FAX}}"
+               required>
+        <span *ngIf="!FAX.valid && FAX.touched" class="help-block text-danger input_span">Date of contract</span>
+      </div>
+      <div class="col-md-3  label-block"><!--внешнее имя-->
+        Main account with branch code :
+      </div>
+      <div class="col-md-3">
+        <input type="text" name="REG_NR" #REG_NR="ngModel" class="form-control inputclass"  ngModel="{{editContract?.REG_NR}}"
+               required>
+        <span *ngIf="!REG_NR.valid && REG_NR.touched"
+              class="help-block text-danger input_span">Main account with branch code</span>
+      </div>
+    </div>
+    <button type="button" (click)="onCancelEdit()" class="btn bg-btn mt-3">Cancel</button>
+    <button type="submit"  class="btn bg-btn mt-3 ml-3">Change save</button>
+  </form>
+</p-dialog>
+
