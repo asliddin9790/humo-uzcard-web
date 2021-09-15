@@ -207,9 +207,9 @@ export class HumoTerminalComponent implements OnInit {
   }
 
 
-  onCancel(form: NgForm) {
+  onCancel() {
     this.displayBasic2 = false;
-    form.reset();
+    this.displayBasicUpdateHumoTerminal = false;
   }
 
   openUpdate(customer: any) {
@@ -224,7 +224,7 @@ export class HumoTerminalComponent implements OnInit {
 
   onSubmitHumoUpdate(updateHumoTerminal: NgForm) {
     this.humoTerminalService.updateHumoTerminal(updateHumoTerminal);
-    this.displayBasicUpdateHumoTerminal = true;
+    this.displayBasicUpdateHumoTerminal = false;
   }
 
   onDeleteTerminal(customer: any) {
@@ -239,11 +239,9 @@ export class HumoTerminalComponent implements OnInit {
   }
 
 
-
-
   typeChange(terminalType1: any) {
     console.log(terminalType1);
-    switch (terminalType1){
+    switch (terminalType1) {
       case 'pos': {
         this.epos = true;
         this.atm = true;

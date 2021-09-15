@@ -116,16 +116,16 @@
     <ng-template pTemplate="body" let-customer>
       <tr>
         <td class="td-width">
-          {{customer.CONT_PERSON}}
-        </td>
-        <td class="td-width">
           {{customer.ABRV_NAME}}
         </td>
         <td class="td-width">
-          {{customer.FAX}}
+          {{customer.MERCHANT}}
         </td>
         <td class="td-width">
-          {{customer.ABRV_NAME }}
+          {{customer.IMPRINT_FEE}}
+        </td>
+        <td class="td-width">
+          {{customer.STATUS }}
         </td>
         <td>
           <button type="button" pButton pRipple icon="pi pi-user-edit" (click)="openUpdate(customer)" class="p-button-info p-mr-2 ch-btn">Update </button>
