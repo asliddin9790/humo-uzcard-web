@@ -15,14 +15,17 @@ export class HumoTerminalService {
     {status: '781010989'},
     {status: '5555'}
   ];
+
   contractType = [
     {contract: 'Online'},
     {contract: 'Offline'}
   ];
+
   contractStatus = [
     {status: 'Blocked'},
     {status: 'Active'},
   ];
+
   companyMCC = [
     {mcc: '121324'},
     {mcc: '88989'},
@@ -432,7 +435,6 @@ export class HumoTerminalService {
     return this.humoTerminalMod.some(m => m.MERCHANT === item);
   }
 
-
   addMerchants(): HumoTerminal[] {
 // api call and replace the array with API array
     // merchants: HumoTerminal[] = getData from CBS API
@@ -442,7 +444,6 @@ export class HumoTerminalService {
     }
     return this.humoTerminal;
   }
-
 
   deleteContract(customer: any) {
     const index: number = this.merchants.indexOf(customer);
@@ -468,7 +469,6 @@ export class HumoTerminalService {
         this.merchants.push(this.merchants[index]);*/
     /*console.log('Updated contract:  ', this.merchants[index]);*/
   }
-
 
   updateMerchant(customer: NgForm) {
     const i = this.merchants.indexOf(customer.value.MERCHANT);
