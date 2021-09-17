@@ -13,7 +13,6 @@ import {ReportsService} from '../reports.service';
 })
 export class ClientListComponent implements OnInit {
 
-
   searchBtn = true;
   loading: true;
   clientList: ClientList[];
@@ -26,6 +25,16 @@ export class ClientListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    /* this.service.getClientList().subscribe(
+       data => {
+         this.clientList = data;
+         console.log('Client Data: ' + data);
+       }
+     );*/
+    /* this.service.getClientList().then((data) => {
+       this.clientList = data;
+       console.log('Client list.: ' + this.clientList);
+     });*/
     this.clientList = this.service.clients;
   }
 
@@ -34,7 +43,6 @@ export class ClientListComponent implements OnInit {
   }
 
   onSearch(searchForm: NgForm) {
-
     console.log(searchForm.value);
     const result: any[] = [];
     for (const client of this.clientList) {
@@ -58,8 +66,8 @@ export class ClientListComponent implements OnInit {
   onSubmit(form: NgForm) {
     console.log(form.value);
     this.openAddMerchant = false;
+   /* this.roter.navigate(['/humo/merchant']);*/
   }
-
 
   onCancel(form: NgForm) {
     this.openAddMerchant = false;
@@ -71,30 +79,8 @@ export class ClientListComponent implements OnInit {
     console.log('customer.value).: ' + this.customer);
   }
 
-  reportExcel(customer: ClientList) {
+  reportExcel(customer: ClientList[]) {
     this.reportService.reportExcel(customer);
   }
 
-/*   saveAsExcelFile(buffer: any, fileName: string): void {
-     import('file-saver').then(FileSaver => {
-       const EXCEL_TYPE =
-         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-       const EXCEL_EXTENSION = '.xlsx';
-       const data: Blob = new Blob([buffer], {
-         type: EXCEL_TYPE
-       });
-       FileSaver.saveAs(
-         data,
-         fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
-       );
-     });
-     this.reportClearList(this.reportClient[0]);
-   }
-
-   reportClearList(customer: ClientList) {
-     const index: number = this.reportClient.indexOf(customer);
-     if (index !== -1) {
-       this.reportClient.splice(index, 1);
-     }
-   }*/
 }

@@ -15,7 +15,7 @@ list = [];
   reportExcel(customer) {
     this.list.push(customer);
     import('xlsx').then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.list); // Sale Data
+      const worksheet = xlsx.utils.json_to_sheet(customer); // Sale Data
       const workbook = {Sheets: {data: worksheet}, SheetNames: ['data']};
       const excelBuffer: any = xlsx.write(workbook, {bookType: 'xlsx', type: 'array'});
       this.saveAsExcelFile(excelBuffer, 'report');
@@ -35,7 +35,7 @@ list = [];
         fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
       );
     });
-    this.reportClearList(this.list[0]);
+   /* this.reportClearList(this.list[0]);*/
   }
 
   reportClearList(customer) {

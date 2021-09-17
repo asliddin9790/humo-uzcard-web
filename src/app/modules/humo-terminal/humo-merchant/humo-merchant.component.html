@@ -51,17 +51,22 @@
             <input type="text" name="date1" ngModel class="form-control search-input">
           </div>
         </div>
+
+      </div>
+      <div>
         <div class="col-md-1">
           <button type="submit" class="search-btn btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search
           </button>
         </div>
+        <div class="col-md-1">
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(humoMerchant)"  class="p-button-success p-mr-2 ch-btn">Excel report</button>
+        </div>
       </div>
     </form>
   </fieldset>
-
 </div>
 
-<div class="card table-width">
+<div class="card main_table">
 
   <p-table #dt1 [value]="humoMerchant"
            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
@@ -84,20 +89,32 @@
       <tr>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Sequence number
-            <p-columnFilter type="text" field="AGR_NUMBER" display="menu"></p-columnFilter>
-          </div>
-        </th>
-        <th>
-          <div class="p-d-flex p-jc-between p-ai-center">
             Merchant
             <p-columnFilter type="text" field="MERCHANT" display="menu"></p-columnFilter>
           </div>
         </th>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Contract type
-            <p-columnFilter type="text" field="IMPRINT_FEE" display="menu"></p-columnFilter>
+            Date
+            <p-columnFilter type="text" field="AGR_NUMBER" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Name
+            <p-columnFilter type="text" field="STATUS" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Address
+            <p-columnFilter type="text" field="STATUS" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            MMC code
+            <p-columnFilter type="text" field="MCC" display="menu"></p-columnFilter>
           </div>
         </th>
         <th>
@@ -108,7 +125,7 @@
         </th>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Operations
+            Actions
           </div>
         </th>
       </tr>
@@ -122,14 +139,22 @@
           {{customer.MERCHANT}}
         </td>
         <td class="td-width">
+          {{customer.STATUS }}
+        </td>
+        <td class="td-width">
+          {{customer.ABRV_NAME}}
+        </td>
+        <td class="td-width">
           {{customer.IMPRINT_FEE}}
         </td>
         <td class="td-width">
           {{customer.STATUS }}
         </td>
         <td>
-          <button type="button" pButton pRipple icon="pi pi-user-edit" (click)="openUpdate(customer)" class="p-button-info p-mr-2 ch-btn">Update </button>
-          <button type="button" pButton pRipple (click)="onDeleteMerchant(customer)" class="btn btn-danger ml-2 ch-btn"  icon="pi pi-user-minus">Delete </button>
+          <button type="button" pButton pRipple (click)="openUpdate(customer)" icon="pi pi-pencil"
+                  class="p-button-rounded  p-mr-2 btn-delete"></button>
+          <button type="button" pButton pRipple (click)="onDeleteMerchant(customer)"
+                  class="p-button-rounded  ml-3 p-mr-2 btn-delete" icon="pi pi-times"></button>
         </td>
       </tr>
     </ng-template>
@@ -362,16 +387,17 @@
 </p-dialog>-->
 
 <!--Update merchant-->
-<p-dialog class="dialog" header="Update  client(merchant)" [style]="{width: '70vw'}"
+<p-dialog header="Update  client(merchant)" [style]="{width: '70vw'}"
           [(visible)]="displayBasicUpdate">
-  <h2 class="h1-title">Update  client(merchant)</h2>
+  <h2 class="h1-title">Update client(merchant)</h2>
   <form class="p-5" #updateMerchant="ngForm" ngForm="updateMerchant" (ngSubmit)="onSubmitUdateMerchant(updateMerchant)">
     <div class="row">
       <div class="col-md-3 label-block">
         Abbreviated company name:
       </div>
       <div class="col-md-3">
-        <input type="text" name="ABRV_NAME" #ABRV_NAME="ngModel" class="form-control inputclass" ngModel="{{updateMerchent?.ABRV_NAME}}"
+        <input type="text" name="ABRV_NAME" #ABRV_NAME="ngModel" class="form-control inputclass"
+               ngModel="{{updateMerchent?.ABRV_NAME}}"
                required>
         <span *ngIf="!ABRV_NAME.valid && ABRV_NAME.touched" class="help-block text-danger input_span">Please enter a valid ABRV_NAME Id!</span>
       </div>
@@ -450,14 +476,14 @@
       </div>
       <div class="col-md-3">
         <input type="text" name="PHONE" #PHONE="ngModel" class="form-control inputclass"
-               ngModel="{{updateMerchent?.PHONE}}"  required>
+               ngModel="{{updateMerchent?.PHONE}}" required>
         <span *ngIf="!PHONE.valid && PHONE.touched"
               class="help-block text-danger input_span">Please enter a valid PHONE!</span>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-md-3 label-block">
-        Legal address - contact person - type:
+        Legal address - contact person:
       </div>
       <div class="col-md-3">
         <input type="text" name="CONT_PERSON" #CONT_PERSON="ngModel" class="form-control inputclass"
@@ -468,22 +494,31 @@
         Company MCC code - type:
       </div>
       <div class="col-md-3">
-        <select required name="MCC"   ngModel="{{updateMerchent?.MCC}}"  class="form-control search-input inputclass">
-          <option *ngFor="let mcc of mcc" value="{{mcc.mcc}}">{{mcc.mcc}}</option>
-        </select>
+         <select required name="MCC"   ngModel="{{updateMerchent?.MCC}}"  class="form-control search-input inputclass">
+           <option *ngFor="let mcc of mcc" value="{{mcc.mcc}}">{{mcc.mcc}}</option>
+         </select>
+       <!-- <p-autoComplete  [suggestions]="mccResult" [(ngModel)]="mcc"
+                        (completeMethod)="searchEmps($event)" field="MCC" [dropdown]="true">
+          <ng-template let-employee pTemplate="item">
+            {{employee.mcc}}
+          </ng-template>
+          <ng-template let-employee pTemplate="selectedItem">
+            {{employee.mcc}}
+          </ng-template>
+        </p-autoComplete>-->
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-md-3 label-block">
-        Physical address - state code - type:
+        Physical address - state code:
       </div>
       <div class="col-md-3">
         <input type="text" name="P_CNTRY" #P_CNTRY="ngModel" class="form-control inputclass"
-               ngModel="{{updateMerchent?.P_CNTRY}}"  required>
+               ngModel="{{updateMerchent?.P_CNTRY}}" required>
         <span *ngIf="!P_CNTRY.valid && P_CNTRY.touched" class="help-block text-danger input_span">Please enter a valid P_CNTRY!</span>
       </div>
       <div class="col-md-3 label-block ">
-        Physical address - city - type:
+        Physical address - city:
       </div>
       <div class="col-md-3">
         <input type="text" name="P_CITY" #P_CITY="ngModel" class="form-control inputclass"
@@ -527,7 +562,7 @@
       </div>
       <div class="col-md-3">
         <input type="text" name="REPORT_CRIT" #REPORT_CRIT="ngModel" class="form-control inputclass"
-               ngModel="{{updateMerchent?.REPORT_CRIT}}"  required>
+               ngModel="{{updateMerchent?.REPORT_CRIT}}" required>
         <span *ngIf="!REPORT_CRIT.valid && REPORT_CRIT.touched" class="help-block text-danger input_span">Please enter a valid REPORT_CRIT!</span>
       </div>
       <div class="col-md-3 label-block ">
@@ -567,13 +602,13 @@
       </div>
       <div class="col-md-3">
         <input type="text" name="USER_FIELD" #USER_FIELD="ngModel" class="form-control inputclass"
-               ngModel="{{updateMerchent?.USER_FIELD}}"  required>
+               ngModel="{{updateMerchent?.USER_FIELD}}" required>
         <span *ngIf="!USER_FIELD.valid && USER_FIELD.touched"
               class="help-block text-danger input_span">Please enter a valid USER_FIELD!</span>
       </div>
     </div>
 
     <button type="button" (click)="onCancel()" class="btn bg-btn mt-3">Cancel</button>
-    <button type="submit"  class="btn bg-btn mt-3 ml-3">Save</button>
+    <button type="submit" class="btn bg-btn mt-3 ml-3">Save</button>
   </form>
 </p-dialog>

@@ -2,11 +2,21 @@ import {Injectable} from '@angular/core';
 import {HumoTerminal} from 'src/app/model/humo-terminal';
 import {NgForm} from '@angular/forms';
 import {HumoTerminalMod} from '../../model/humo-terminal-mod';
+import {HttpClient} from '@angular/common/http';
+import {ClientList} from '../../model/client-list';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HumoTerminalService {
+
+
+  private Url = 'http://localhost:8080/api/humo-terminal';
+
+  constructor(private http: HttpClient) {
+  }
+
 
   status = [
     {status: 'Blocked'},
@@ -295,133 +305,145 @@ export class HumoTerminalService {
     }
   ];
 
-  clients = [
-    {
-      clientId: '1',
-      clientName: 'James',
-      clientStatus: 'Actived',
-      FAX: 'fax-l',
-      FULL_NAME: 'James Bond',
-      CNTRY: 'Uzcc',
-      CITY: 'Tashkent',
-      REG_NR: 'reg nr',
-      STREET: 'STREET',
-      POST_IND: 'POST_IND',
-      PHONE: '+998 97 001 01 01',
-      CONT_PERSON: 'CONT_PERSON',
-      MCC: 'MCC',
-      P_CNTRY: 'P_CNTRY',
-      P_CITY: 'P_CITY',
-      P_STREET: 'P_STREET',
-      P_POST_IND: 'P_POST_IND',
-      MRC_PHONE: 'MRC_PHONE',
-      REPORT_CRIT: 'REPORT_CRIT',
-      E_MAIL: 'E_MAIL',
-      ADD_INFO: 'ADD_INFO',
-      REPORT_CRIT2: 'r6',
-      USER_FIELD: 'f6'
-    },
-    {
-      clientId: '2',
-      clientName: 'John',
-      clientStatus: 'Blocked',
-      FAX: 'fax-l',
-      FULL_NAME: 'John Week',
-      CNTRY: 'Uzcc',
-      CITY: 'Tashkent',
-      REG_NR: 'reg nr',
-      STREET: 'STREET',
-      POST_IND: 'POST_IND',
-      PHONE: '+998 97 001 01 01',
-      CONT_PERSON: 'CONT_PERSON',
-      MCC: 'MCC',
-      P_CNTRY: 'P_CNTRY',
-      P_CITY: 'P_CITY',
-      P_STREET: 'P_STREET',
-      P_POST_IND: 'P_POST_IND',
-      MRC_PHONE: 'MRC_PHONE',
-      REPORT_CRIT: 'REPORT_CRIT',
-      E_MAIL: 'E_MAIL',
-      ADD_INFO: 'ADD_INFO',
-      REPORT_CRIT2: 'r5',
-      USER_FIELD: 'f5'
-    },
-    {
-      clientId: '3',
-      clientName: 'Killy',
-      clientStatus: 'Blocked',
-      FAX: 'fax-l',
-      FULL_NAME: 'Killy Week',
-      CNTRY: 'Uzcc',
-      CITY: 'Tashkent',
-      REG_NR: 'reg nr',
-      STREET: 'STREET',
-      POST_IND: 'POST_IND',
-      PHONE: '+998 97 001 01 01',
-      CONT_PERSON: 'CONT_PERSON',
-      MCC: 'MCC',
-      P_CNTRY: 'P_CNTRY',
-      P_CITY: 'P_CITY',
-      P_STREET: 'P_STREET',
-      P_POST_IND: 'P_POST_IND',
-      MRC_PHONE: 'MRC_PHONE',
-      REPORT_CRIT: 'REPORT_CRIT',
-      E_MAIL: 'E_MAIL',
-      ADD_INFO: 'ADD_INFO',
-      REPORT_CRIT2: 'r4',
-      USER_FIELD: 'f4'
-    },
-    {
-      clientId: '4',
-      clientName: 'Adrey',
-      clientStatus: 'Active',
-      FAX: 'fax-l',
-      FULL_NAME: 'Killy Week',
-      CNTRY: 'Uzcc',
-      CITY: 'Tashkent',
-      REG_NR: 'reg nr',
-      STREET: 'STREET',
-      POST_IND: 'POST_IND',
-      PHONE: '+998 97 001 01 01',
-      CONT_PERSON: 'CONT_PERSON',
-      MCC: 'MCC',
-      P_CNTRY: 'P_CNTRY',
-      P_CITY: 'P_CITY',
-      P_STREET: 'P_STREET',
-      P_POST_IND: 'P_POST_IND',
-      MRC_PHONE: 'MRC_PHONE',
-      REPORT_CRIT: 'REPORT_CRIT',
-      E_MAIL: 'E_MAIL',
-      ADD_INFO: 'ADD_INFO',
-      REPORT_CRIT2: 'report 2',
-      USER_FIELD: 'user field vv'
-    },
-    {
-      clientId: '5',
-      clientName: 'Alisaa',
-      clientStatus: 'Active',
-      FAX: 'fax-l',
-      FULL_NAME: 'Killy Week',
-      CNTRY: 'Uzcc',
-      CITY: 'Tashkent',
-      REG_NR: 'reg nr',
-      STREET: 'STREET',
-      POST_IND: 'POST_IND',
-      PHONE: '+998 33 003 03 03',
-      CONT_PERSON: 'CONT_PERSON',
-      MCC: 'MCC',
-      P_CNTRY: 'P_CNTRY',
-      P_CITY: 'P_CITY',
-      P_STREET: 'P_STREET',
-      P_POST_IND: 'P_POST_IND',
-      MRC_PHONE: 'MRC_PHONE',
-      REPORT_CRIT: 'REPORT_CRIT',
-      E_MAIL: 'E_MAIL',
-      ADD_INFO: 'ADD_INFO',
-      REPORT_CRIT2: 'r3',
-      USER_FIELD: 'f3'
-    },
+  clients: ClientList[] = [
+       {
+         clientId: '1',
+         clientName: 'James',
+         clientStatus: 'Actived',
+         FAX: 'fax-l',
+         FULL_NAME: 'James Bond',
+         CNTRY: 'Uzcc',
+         CITY: 'Tashkent',
+         REG_NR: 'reg nr',
+         STREET: 'STREET',
+         POST_IND: 'POST_IND',
+         PHONE: '+998 97 001 01 01',
+         CONT_PERSON: 'CONT_PERSON',
+         MCC: 'MCC',
+         P_CNTRY: 'P_CNTRY',
+         P_CITY: 'P_CITY',
+         P_STREET: 'P_STREET',
+         P_POST_IND: 'P_POST_IND',
+         MRC_PHONE: 'MRC_PHONE',
+         REPORT_CRIT: 'REPORT_CRIT',
+         E_MAIL: 'E_MAIL',
+         ADD_INFO: 'ADD_INFO',
+         REPORT_CRIT2: 'r6',
+         USER_FIELD: 'f6'
+       },
+       {
+         clientId: '2',
+         clientName: 'John',
+         clientStatus: 'Blocked',
+         FAX: 'fax-l',
+         FULL_NAME: 'John Week',
+         CNTRY: 'Uzcc',
+         CITY: 'Tashkent',
+         REG_NR: 'reg nr',
+         STREET: 'STREET',
+         POST_IND: 'POST_IND',
+         PHONE: '+998 97 001 01 01',
+         CONT_PERSON: 'CONT_PERSON',
+         MCC: 'MCC',
+         P_CNTRY: 'P_CNTRY',
+         P_CITY: 'P_CITY',
+         P_STREET: 'P_STREET',
+         P_POST_IND: 'P_POST_IND',
+         MRC_PHONE: 'MRC_PHONE',
+         REPORT_CRIT: 'REPORT_CRIT',
+         E_MAIL: 'E_MAIL',
+         ADD_INFO: 'ADD_INFO',
+         REPORT_CRIT2: 'r5',
+         USER_FIELD: 'f5'
+       },
+       {
+         clientId: '3',
+         clientName: 'Killy',
+         clientStatus: 'Blocked',
+         FAX: 'fax-l',
+         FULL_NAME: 'Killy Week',
+         CNTRY: 'Uzcc',
+         CITY: 'Tashkent',
+         REG_NR: 'reg nr',
+         STREET: 'STREET',
+         POST_IND: 'POST_IND',
+         PHONE: '+998 97 001 01 01',
+         CONT_PERSON: 'CONT_PERSON',
+         MCC: 'MCC',
+         P_CNTRY: 'P_CNTRY',
+         P_CITY: 'P_CITY',
+         P_STREET: 'P_STREET',
+         P_POST_IND: 'P_POST_IND',
+         MRC_PHONE: 'MRC_PHONE',
+         REPORT_CRIT: 'REPORT_CRIT',
+         E_MAIL: 'E_MAIL',
+         ADD_INFO: 'ADD_INFO',
+         REPORT_CRIT2: 'r4',
+         USER_FIELD: 'f4'
+       },
+       {
+         clientId: '4',
+         clientName: 'Adrey',
+         clientStatus: 'Active',
+         FAX: 'fax-l',
+         FULL_NAME: 'Killy Week',
+         CNTRY: 'Uzcc',
+         CITY: 'Tashkent',
+         REG_NR: 'reg nr',
+         STREET: 'STREET',
+         POST_IND: 'POST_IND',
+         PHONE: '+998 97 001 01 01',
+         CONT_PERSON: 'CONT_PERSON',
+         MCC: 'MCC',
+         P_CNTRY: 'P_CNTRY',
+         P_CITY: 'P_CITY',
+         P_STREET: 'P_STREET',
+         P_POST_IND: 'P_POST_IND',
+         MRC_PHONE: 'MRC_PHONE',
+         REPORT_CRIT: 'REPORT_CRIT',
+         E_MAIL: 'E_MAIL',
+         ADD_INFO: 'ADD_INFO',
+         REPORT_CRIT2: 'report 2',
+         USER_FIELD: 'user field vv'
+       },
+       {
+         clientId: '5',
+         clientName: 'Alisaa',
+         clientStatus: 'Active',
+         FAX: 'fax-l',
+         FULL_NAME: 'Killy Week',
+         CNTRY: 'Uzcc',
+         CITY: 'Tashkent',
+         REG_NR: 'reg nr',
+         STREET: 'STREET',
+         POST_IND: 'POST_IND',
+         PHONE: '+998 33 003 03 03',
+         CONT_PERSON: 'CONT_PERSON',
+         MCC: 'MCC',
+         P_CNTRY: 'P_CNTRY',
+         P_CITY: 'P_CITY',
+         P_STREET: 'P_STREET',
+         P_POST_IND: 'P_POST_IND',
+         MRC_PHONE: 'MRC_PHONE',
+         REPORT_CRIT: 'REPORT_CRIT',
+         E_MAIL: 'E_MAIL',
+         ADD_INFO: 'ADD_INFO',
+         REPORT_CRIT2: 'r3',
+         USER_FIELD: 'f3'
+       },
   ];
+
+  getClientList()/*: Observable<ClientList[]> */ {
+    return this.http.get<ClientList[]>(this.Url + '/clients')
+      .toPromise()
+      .then((data) => {
+        return data;
+      });
+  }
+
+  getHumoTerminalList(): Observable<HumoTerminal[]> {
+    return this.http.get<HumoTerminal[]>(this.Url + '/merchant');
+  }
 
   authMerchant(item: any): boolean {
     return this.merchants.some(m => m.MERCHANT === item);

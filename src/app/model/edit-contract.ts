@@ -1,9 +1,5 @@
 export class EditContract {
   constructor(
-    /*public MERCHANT: string,
-    public ABRV_NAME: string,
-    public FAX: string,
-    public REG_NR: string,*/
     public MERCHANT: string,
     public ABRV_NAME: string,
     public FAX: string,

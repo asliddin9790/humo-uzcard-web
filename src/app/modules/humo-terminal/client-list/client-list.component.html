@@ -49,18 +49,16 @@
           <button type="submit" class=" btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search
           </button>
         </div>
+        <div class="col-md-1">
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(clientList)"  class="p-button-success p-mr-2 ch-btn">Excel report</button>
+        </div>
       </div>
     </form>
   </fieldset>
 
 </div>
 
-<div class="card table-width">
-  <!--  <div class="m-3 search-title">
-      <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog()"
-                icon="pi pi-user-plus" label="Add New Client"></p-button>
-    </div>
--->
+<div class="card main_table">
   <p-table #dt1 [value]="clientList"
            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
            styleClass="p-datatable-gridlines"
@@ -76,6 +74,7 @@
                        placeholder="Search keyword"/>
             </span>
       </div>
+
     </ng-template>
 
     <ng-template pTemplate="header">
@@ -98,7 +97,18 @@
             <p-columnFilter type="text" field="clientStatus" display="menu"></p-columnFilter>
           </div>
         </th>
-
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+           INN
+            <p-columnFilter type="text" field="INN" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            NFO
+            <p-columnFilter type="text" field="INFO" display="menu"></p-columnFilter>
+          </div>
+        </th>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
             Actions
@@ -117,13 +127,19 @@
         <td class="td-width">
           {{customer.clientStatus}}
         </td>
+        <td class="td-width">
+          {{customer.MCC}}
+        </td>
+        <td class="td-width">
+          {{customer.MCC}}
+        </td>
         <td>
-          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(customer)"  class="p-button-success p-mr-2 ch-btn">Excel report</button>
           <p-button  [style]="{backgroundColor:'#6D90A3', width:'105px'}" class="ch-btn" (click)="showBasicDialogAddmerchant(customer)"
-                     icon="pi pi-plus">Merchant </p-button>
+                     icon="pi pi-plus">Merchant</p-button>
         </td>
       </tr>
     </ng-template>
+
     <ng-template pTemplate="emptymessage">
       <tr>
         <td colspan="7">No customers found.</td>
@@ -133,14 +149,11 @@
 </div>
 
 
-
-
 <!--Add merchant-->
-<p-dialog class="dialog" header="Adding new client(merchant)" [style]="{width: '70vw'}"
+<p-dialog header="Adding new client(merchant)" [style]="{width: '70vw'}"
           [(visible)]="openAddMerchant">
   <h2 class="h1-title">Adding new client(merchant)</h2>
   <form class="p-5" #form="ngForm" ngForm="form" (ngSubmit)="onSubmit(form)">
-
 
     <div class="row">
       <div class="col-md-3 label-block">
@@ -180,7 +193,6 @@
         <span *ngIf="!FAX.valid && FAX.touched" class="help-block text-danger input_span">Please enter a valid FAX type !</span>
       </div>
     </div>
-
 
     <div class="row mt-3">
       <div class="col-md-3 label-block">
@@ -261,7 +273,6 @@
     </div>
 
     <div class="row mt-3">
-
       <div class="col-md-3 label-block">
         Company MCC code - type:
       </div>

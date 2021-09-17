@@ -1,29 +1,35 @@
 .main_table {
   margin: 30px;
+  box-shadow: 0 0 1px 1px #9CAEB8;
 }
 .search-title {
   font-size: 20px;
   color: #6D90A3;
   cursor: pointer;
+  padding: 15px;
 }
 .search-input {
   justify-content: center;
   height: 30px;
 }
+.btn-edit{
+  background-color: #089a23;
+}
+.btn-delete{
+  background-color: #6D90A3;
+}
 
 .span {
   font-size: 13px;
   /*  background-color: #6D90A3;*/
-  border-bottom-left-radius: 5.46px;
-  border-top-left-radius: 5.46px;
-  border-bottom-right-radius: 0px;
-  border-top-right-radius: 0px;
+  border-radius: 5.46px 0px 0px 5.46px;
   /*  color: white;*/
   height: 30px;
 }
 
 .table-width{
   margin: 30px;
+  box-shadow: 0 0 1px 1px #9CAEB8;
 }
 
 .cancel-btn{

@@ -233,7 +233,7 @@ export class HumoTerminalComponent implements OnInit {
     Swal.fire('Deleted!', 'Humo Terminal deleted, ' + customer.MERCHANT, 'success');
   }
 
-  reportExcel(customer: any) {
+    reportExcel(customer: any) {
     console.log('terminal excel custom.: ', customer);
     this.reportService.reportExcel(customer);
   }

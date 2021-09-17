@@ -6,7 +6,7 @@ import {Table} from 'primeng/table';
 import {MenuItem, MessageService} from 'primeng/api';
 import {EditContract} from '../../../model/edit-contract';
 import Swal from 'sweetalert2';
-import {ReportsService} from "../reports.service";
+import {ReportsService} from '../reports.service';
 
 @Component({
   selector: 'app-humo-contacts',
@@ -17,7 +17,7 @@ export class HumoContactsComponent implements OnInit {
   loading = false;
   displayBasic2: boolean;
   searchBtn = true;
-  humoMerchant: HumoTerminal[];
+  humoContract: HumoTerminal[];
   contractTpye: any[];
   contractStatus: any[];
 
@@ -27,15 +27,22 @@ export class HumoContactsComponent implements OnInit {
   showAddButton = true;
 
 
-  constructor(private humoTerminalService: HumoTerminalService, private messageService: MessageService, private reportService: ReportsService) {
+  constructor(private humoTerminalService: HumoTerminalService,
+              private messageService: MessageService,
+              private reportService: ReportsService) {
   }
 
   ngOnInit(): void {
-    this.humoMerchant = this.humoTerminalService.merchants;
+    this.humoContract = this.humoTerminalService.merchants;
+    /*   this.humoTerminalService.getHumoTerminalList().subscribe(
+         (data: HumoTerminal[]) => {
+           this.humoContract = data;
+           console.log('concat ' + this.humoContract);
+         }
+       );*/
+
     this.contractTpye = this.humoTerminalService.contractType;
     this.contractStatus = this.humoTerminalService.contractStatus;
-
-
     this.items = [
       {
         label: 'Update', icon: 'pi pi-refresh', command: () => {
@@ -53,12 +60,12 @@ export class HumoContactsComponent implements OnInit {
   onSearch(searchForm: NgForm) {
     console.log(searchForm.value);
     const result: any[] = [];
-    for (const r of this.humoMerchant) {
+    for (const r of this.humoContract) {
       if (r.ABRV_NAME.toLowerCase().indexOf(searchForm.value.merchantId) !== -1 /*||
         r..toLowerCase().indexOf(searchForm.value.status) !== -1*/) {
         result.push(r);
       }
-      this.humoMerchant = result;
+      this.humoContract = result;
     }
   }
 
@@ -88,6 +95,7 @@ export class HumoContactsComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.humoContract.push(form.value);
     this.displayBasic2 = false;
   }
 
@@ -97,7 +105,7 @@ export class HumoContactsComponent implements OnInit {
   }
 
 
-  onEdited(customer: any) {
+  onEdited(customer: HumoTerminal) {
     this.editContract = customer;
     this.displayBasicUpdate = true;
     console.log('Edit conract: ', this.editContract);
@@ -116,7 +124,7 @@ export class HumoContactsComponent implements OnInit {
     console.log('Edit contract info : ', updateForm.value);
     this.humoTerminalService.updateContract(updateForm);
     this.displayBasicUpdate = false;
-    Swal.fire('Updated!', 'Edited Succussefuly', 'success',);
+    Swal.fire('Updated!', 'Edited Succussefuly', 'success');
   }
 
 

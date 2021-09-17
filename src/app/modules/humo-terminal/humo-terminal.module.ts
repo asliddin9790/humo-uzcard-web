@@ -26,6 +26,8 @@ import {HumoContactsComponent} from './humo-contacts/humo-contacts.component';
 import {HumoTerminalComponent} from './humo-terminal.component';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import { ClientListComponent } from './client-list/client-list.component';
+import {HttpClientModule} from '@angular/common/http';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -58,7 +60,9 @@ import { ClientListComponent } from './client-list/client-list.component';
     RippleModule,
     InputTextModule,
     DialogModule,
-    SplitButtonModule
+    SplitButtonModule,
+    HttpClientModule,
+    AutoCompleteModule
   ],
   entryComponents: [
     HumoPosComponent,

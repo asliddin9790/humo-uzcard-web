@@ -46,14 +46,15 @@
           </div>
         </div>
         <div class="col-md-2">
-          <div class="input-group mb-3">
-            <span class="input-group-text span">Terminal number</span>
-            <input type="text" name="date1" ngModel class="form-control search-input">
-          </div>
-        </div>
-        <div class="col-md-1">
-          <button type="submit" class="search-btn btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search
-          </button>
+        <!--  <div class="input-group mb-3">
+           &lt;!&ndash; <span class="input-group-text span">Terminal number</span>
+            <input type="text" name="date1" ngModel class="form-control search-input">&ndash;&gt;
+
+
+          </div>-->
+          <button type="submit" class=" btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search
+        </button>
+          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(humoTerminalMod)"  class="p-button-success p-mr-2 search-input ch-btn">Report </button>
         </div>
       </div>
     </form>
@@ -61,7 +62,7 @@
 
 </div>
 
-<div class="card table-width">
+<div class="card main_table">
   <div class="m-3 search-title">
     <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog2()"
               icon="pi pi-credit-card pi-plus" label="Terminal"></p-button>
@@ -112,7 +113,13 @@
         </th>
         <th>
           <div class="p-d-flex p-jc-between p-ai-center">
-            Operations
+            TMC Code
+            <p-columnFilter type="text" field="terminalSerialNumber" display="menu"></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="p-d-flex p-jc-between p-ai-center">
+            Actions
           </div>
         </th>
       </tr>
@@ -131,10 +138,12 @@
         <td class="td-width">
           {{customer.terminalSerialNumber}}
         </td>
+        <td class="td-width">
+          {{customer.terminalSerialNumber}}
+        </td>
         <td>
-          <button type="button" pButton pRipple icon="pi pi-user-edit" (click)="openUpdate(customer)"  class="p-button-info p-mr-2 ch-btn">Update </button>
-          <button type="button" pButton pRipple  (click)="onDeleteTerminal(customer)" class="btn btn-danger ml-2 ch-btn"  icon="pi pi-user-minus">Delete </button>
-          <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(customer)"  class="p-button-success p-mr-2 ch-btn">Report </button>
+          <button type="button" pButton pRipple  (click)="openUpdate(customer)"  icon="pi pi-pencil" class="p-button-rounded  p-mr-2 btn-delete"></button>
+          <button type="button" pButton pRipple  (click)="onDeleteTerminal(customer)" class="p-button-rounded  ml-3 p-mr-2 btn-delete"  icon="pi pi-times"></button>
         </td>
       </tr>
     </ng-template>
@@ -148,7 +157,7 @@
 
 
 <!--Add Humo terminal-->
-<p-dialog class="dialog" header="Adding new client(terminal)" [style]="{width: '70vw'}"
+<p-dialog  header="Adding new client(terminal)" [style]="{width: '70vw'}"
           [(visible)]="displayBasic2">
   <h2 class="h1-title">Adding new client (terminal)</h2>
   <form class="p-5" #form="ngForm" ngForm="form" (ngSubmit)="onSubmit(form)">
@@ -239,7 +248,7 @@
       </div>
     </div>
 
-
+1
     <div class="row mt-3"  *ngIf="!epos && atm">
       <div class="col-md-3 label-block">
         Serial number of terminal:
@@ -325,7 +334,7 @@
 
 
 <!--Update humo terminal-->
-<p-dialog class="dialog" header="Udate client(terminal)" [style]="{width: '70vw'}"
+<p-dialog header="Udate client(terminal)" [style]="{width: '70vw'}"
           [(visible)]="displayBasicUpdateHumoTerminal">
   <h2 class="h1-title">Udate client(terminal)</h2>
   <form class="p-5" #formUpdate="ngForm" ngForm="form" (ngSubmit)="onSubmitHumoUpdate(formUpdate)">

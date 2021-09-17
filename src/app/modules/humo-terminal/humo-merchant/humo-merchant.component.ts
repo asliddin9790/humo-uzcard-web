@@ -5,6 +5,7 @@ import {Table} from 'primeng/table';
 import {HumoTerminal} from '../../../model/humo-terminal';
 import {EditMerchant} from '../../../model/edit-merchant';
 import Swal from 'sweetalert2';
+import {ReportsService} from "../reports.service";
 
 @Component({
   selector: 'app-humo-merchant',
@@ -21,19 +22,22 @@ export class HumoMerchantComponent implements OnInit {
   mcc: any[];
   displayBasicUpdate = false;
   updateMerchent: EditMerchant;
+  // @ts-ignore
+  mccResult: Array = [];
+  employee: any;
 
-  constructor(private humoTerminalService: HumoTerminalService) {
+  constructor(private humoTerminalService: HumoTerminalService, private reportService: ReportsService) {
   }
 
   ngOnInit(): void {
     this.humoMerchant = this.humoTerminalService.merchants;
     this.status = this.humoTerminalService.status;
     this.mcc = this.humoTerminalService.companyMCC;
-    console.log(this.status);
+    console.log('this.mcc ' + this.mcc);
   }
 
   onSearch(searchForm: NgForm) {
-    console.log(searchForm.value);
+
     const result: any[] = [];
     for (const r of this.humoMerchant) {
       if (r.ABRV_NAME.toLowerCase().indexOf(searchForm.value.merchantId) !== -1 /*||
@@ -90,6 +94,15 @@ export class HumoMerchantComponent implements OnInit {
 
   onEditCancel() {
     this.displayBasic2 = false;
+  }
+
+  searchEmps(event): void {
+    this.mccResult = this.mcc.filter(m => m.mcc.startWith(event.query));
+    console.log('event.query ' + event.query);
+  }
+
+  reportExcel(humoMerchant: HumoTerminal[]) {
+    this.reportService.reportExcel(humoMerchant);
   }
 }
 
