@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {HomeComponent} from './home.component';
 import {HumoMerchantComponent} from '../humo-terminal/humo-merchant/humo-merchant.component';
 import {HumoContactsComponent} from '../humo-terminal/humo-contacts/humo-contacts.component';
 import {ClientListComponent} from '../humo-terminal/client-list/client-list.component';
 
 
 const routes: Routes = [{
-  path : '' ,
-  component : HomeComponent,
+  path: '',
+  component: HomeComponent,
   children: [
     {
       path: 'humo',
@@ -43,6 +43,13 @@ const routes: Routes = [{
         import('../uzcard-terminal/uzcard-terminal.module').then(
           (m) => m.UzcardTerminalModule
         ),
+    },
+    {
+      path: 'file-prosessing',
+      loadChildren: () =>
+        import('../humo-file-prosessing/humo-file-prosessing.module').then(
+          (a) => a.HumoFileProsessingModule
+        ),
     }
   ]
 }];
@@ -51,4 +58,5 @@ const routes: Routes = [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DemoRoutingModule { }
+export class DemoRoutingModule {
+}

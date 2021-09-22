@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {HumoTerminal} from '../../../model/humo-terminal';
-import {HumoTerminalService} from '../humo-terminal.service';
+import {HumoTerminalService} from '../services/humo-terminal.service';
 import {NgForm} from '@angular/forms';
 import {Table} from 'primeng/table';
 import {MenuItem, MessageService} from 'primeng/api';
-import {EditContract} from '../../../model/edit-contract';
 import Swal from 'sweetalert2';
-import {ReportsService} from '../reports.service';
+import {ReportsService} from '../services/reports.service';
+import {HumoContractList} from '../../../model/humo-contract-list';
 
 @Component({
   selector: 'app-humo-contacts',
@@ -17,12 +17,15 @@ export class HumoContactsComponent implements OnInit {
   loading = false;
   displayBasic2: boolean;
   searchBtn = true;
-  humoContract: HumoTerminal[];
+  humoContract: HumoContractList[];
   contractTpye: any[];
   contractStatus: any[];
-
+  unionPay: any;
+  masterCard: any;
+  visa: any;
+  humoCard: any;
   items: MenuItem[];
-  editContract: EditContract;
+  editContract: HumoContractList;
   displayBasicUpdate: boolean;
   showAddButton = true;
 
@@ -32,8 +35,21 @@ export class HumoContactsComponent implements OnInit {
               private reportService: ReportsService) {
   }
 
+
   ngOnInit(): void {
-    this.humoContract = this.humoTerminalService.merchants;
+    this.getAllData();
+    this.humoContract = this.humoTerminalService.contracts;
+    console.log('dattttaa:  ' + this.humoContract);
+  }
+
+  getAllData() {
+    this.humoCard = this.humoTerminalService.humoCard;
+    this.visa = this.humoTerminalService.visa;
+    this.masterCard = this.humoTerminalService.masterCard;
+    this.unionPay = this.humoTerminalService.unionPay;
+    console.log('this.humoCard' + this.humoCard);
+
+    this.humoContract = this.humoTerminalService.contractList;
     /*   this.humoTerminalService.getHumoTerminalList().subscribe(
          (data: HumoTerminal[]) => {
            this.humoContract = data;
@@ -61,7 +77,7 @@ export class HumoContactsComponent implements OnInit {
     console.log(searchForm.value);
     const result: any[] = [];
     for (const r of this.humoContract) {
-      if (r.ABRV_NAME.toLowerCase().indexOf(searchForm.value.merchantId) !== -1 /*||
+      if (r.merchantId.toLowerCase().indexOf(searchForm.value.merchantId) !== -1 /*||
         r..toLowerCase().indexOf(searchForm.value.status) !== -1*/) {
         result.push(r);
       }
@@ -96,6 +112,7 @@ export class HumoContactsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.humoContract.push(form.value);
+    console.log('this.humoContract.: ' + this.humoContract);
     this.displayBasic2 = false;
   }
 
@@ -105,14 +122,14 @@ export class HumoContactsComponent implements OnInit {
   }
 
 
-  onEdited(customer: HumoTerminal) {
+  onEdited(customer: HumoContractList) {
     this.editContract = customer;
     this.displayBasicUpdate = true;
     console.log('Edit conract: ', this.editContract);
   }
 
   onDeletedContract(customer: any) {
-    Swal.fire('Deleted!', 'User deleted, ' + customer.FULL_NAME, 'success');
+    Swal.fire('Deleted!', 'User deleted, ' + customer.merchantId, 'success');
     this.humoTerminalService.deleteContract(customer);
   }
 

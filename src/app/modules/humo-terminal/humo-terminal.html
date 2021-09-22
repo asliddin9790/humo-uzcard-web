@@ -52,7 +52,7 @@
 
 
           </div>-->
-          <button type="submit" class=" btn btn-secondary search-input p-2"><i class="pi pi-search"></i>Search
+          <button type="submit" class=" btn bg-btn search-input p-2"><i class="pi pi-search text-white"></i>Search
         </button>
           <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="reportExcel(humoTerminalMod)"  class="p-button-success p-mr-2 search-input ch-btn">Report </button>
         </div>
@@ -67,7 +67,7 @@
     <p-button class="card-btn" [style]="{backgroundColor:'#6D90A3'}" (click)="showBasicDialog2()"
               icon="pi pi-credit-card pi-plus" label="Terminal"></p-button>
   </div>
-
+<!--Humo Terminal Table-->
   <p-table #dt1 [value]="humoTerminalMod"
            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
            styleClass="p-datatable-gridlines"
@@ -170,10 +170,7 @@
       <div class="col-md-3">
         <select required name="terminalType1" (change)="typeChange(form.value.terminalType1)"
                 ngModel #terminalType1="ngModel"  class="form-control search-input inputclass">
-          <option value="epos">EPOS Terminal</option>
-          <option value="imprinters">Imprinters</option>
-          <option value="pos">POS Terminal</option>
-          <option value="atm">ATM Terminal</option>
+          <option *ngFor="let type of humoTerminalType" value="{{type.type}}">{{type.title}}</option>
         </select>
         <span *ngIf="!terminalType1.valid && terminalType1.touched" class="help-block text-danger input_span">Please enter a valid terminalType 1 !</span>
       </div>

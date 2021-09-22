@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Table} from 'primeng/table';
 import {ClientList} from '../../../model/client-list';
-import {HumoTerminalService} from '../humo-terminal.service';
-import {ReportsService} from '../reports.service';
+import {HumoTerminalService} from '../services/humo-terminal.service';
+import {ReportsService} from '../services/reports.service';
 
 
 @Component({
@@ -65,6 +65,7 @@ export class ClientListComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     console.log(form.value);
+    this.service.addMerchant(form.value);
     this.openAddMerchant = false;
    /* this.roter.navigate(['/humo/merchant']);*/
   }

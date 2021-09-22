@@ -21,10 +21,10 @@
 
 .span {
   font-size: 13px;
-  /*  background-color: #6D90A3;*/
   border-radius: 5.46px 0px 0px 5.46px;
-  /*  color: white;*/
   height: 30px;
+  background-color: #6D90A3;
+  color: white;
 }
 
 .table-width{

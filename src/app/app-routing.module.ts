@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {UserRouteAccessGuard, Error1Component} from 'cbs-lib';
+import {Error1Component} from 'cbs-lib';
 
 export const routes: Routes = [
   {
@@ -23,7 +23,6 @@ export const routes: Routes = [
     path: 'error',
     component: Error1Component
   },
-
   {path: '**', redirectTo: 'error'},
 ];
 

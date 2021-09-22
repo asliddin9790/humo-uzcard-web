@@ -5,6 +5,7 @@ import {HumoMerchantComponent} from './humo-merchant/humo-merchant.component';
 import {HumoContractComponent} from './humo-contract/humo-contract.component';
 import {ClientListComponent} from './client-list/client-list.component';
 
+
 const routes: Routes = [{
   path: '',
   component: HumoTerminalComponent,

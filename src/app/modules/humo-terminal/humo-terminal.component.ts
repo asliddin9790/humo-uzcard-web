@@ -1,11 +1,11 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {HumoTerminal} from 'src/app/model/humo-terminal';
-import {HumoTerminalService} from './humo-terminal.service';
+import {HumoTerminalService} from './services/humo-terminal.service';
 import {NgForm, NgModel} from '@angular/forms';
 import {Table} from 'primeng/table';
 import {HumoTerminalMod} from '../../model/humo-terminal-mod';
 import Swal from 'sweetalert2';
-import {ReportsService} from './reports.service';
+import {ReportsService} from './services/reports.service';
 
 
 @Component({
@@ -48,12 +48,14 @@ export class HumoTerminalComponent implements OnInit {
   status: any[];
   displayBasicUpdateHumoTerminal = false;
   updateTerminalMod: HumoTerminalMod;
+  humoTerminalType = [];
 
 
   ngOnInit() {
     this.humoTerminal = this.humoTerminalService.merchants;
     this.humoTerminalMod = this.humoTerminalService.humoTerminalMod;
     this.status = this.humoTerminalService.status;
+    this.humoTerminalType = this.humoTerminalService.humoTerminalType;
 
   }
 
@@ -219,7 +221,7 @@ export class HumoTerminalComponent implements OnInit {
   }
 
   onDeleteMerchant(customer: any) {
-    this.humoTerminalService.deleteContract(customer);
+    this.humoTerminalService.delete(customer);
   }
 
   onSubmitHumoUpdate(updateHumoTerminal: NgForm) {

@@ -83,6 +83,11 @@ export const DynamicAsideMenuConfig = {
           ]
         }
       ],
+    },
+    {
+      title: 'Humo File Prosessing',
+      bullet: 'dot',
+      page: '/file-prosessing',
     }
     /*
         {

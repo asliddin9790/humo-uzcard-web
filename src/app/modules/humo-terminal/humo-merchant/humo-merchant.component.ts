@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {HumoTerminalService} from '../humo-terminal.service';
+import {HumoTerminalService} from '../services/humo-terminal.service';
 import {NgForm} from '@angular/forms';
 import {Table} from 'primeng/table';
 import {HumoTerminal} from '../../../model/humo-terminal';
 import {EditMerchant} from '../../../model/edit-merchant';
 import Swal from 'sweetalert2';
-import {ReportsService} from "../reports.service";
+import {ReportsService} from '../services/reports.service';
 
 @Component({
   selector: 'app-humo-merchant',
@@ -83,7 +83,7 @@ export class HumoMerchantComponent implements OnInit {
 
   onDeleteMerchant(customer: any) {
     Swal.fire('Deleted!', 'User deleted Merchant, ' + customer.FULL_NAME, 'success');
-    this.humoTerminalService.deleteContract(customer);
+    this.humoTerminalService.delete(customer);
   }
 
   onSubmitUdateMerchant(updateMerchant: NgForm) {
